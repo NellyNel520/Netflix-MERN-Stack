@@ -2,12 +2,17 @@ import React,  { useState, useRef } from 'react'
 import './signup.scss'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { firebaseAuth } from '../../utils/firebase'
 
 const Signup = () => {
   const [email, setEmail] = useState('') 
 	const [password, setPassword] = useState('')
 	const [username, setUsername] = useState('')
-	// let navigate = useNavigate()
+	let navigate = useNavigate()
 
 	const emailRef = useRef()
 	const passwordRef = useRef()
@@ -17,10 +22,19 @@ const Signup = () => {
 		setEmail(emailRef.current.value)
 	}
 
-  const handleFinish = () => {
+  const handleFinish = async (e) => {
+    e.preventDefault()
 		setUsername(usernameRef.current.value);
 		setPassword(passwordRef.current.value)
+    try {
+			await createUserWithEmailAndPassword(firebaseAuth, email, password);
+			// navigate('/login')
+		} catch (error) {
+      console.log(error)
+		}
 	}
+
+ 
 
 
   return (
@@ -32,9 +46,9 @@ const Signup = () => {
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
           alt="logo"
         />
-        {/* <Link to='/login'> */}
+        <Link to='/login'>
           <button className="loginButton">Login</button>
-        {/* </Link> */}
+        </Link>
       </div>
     </div>
 
