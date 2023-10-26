@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/home/Home'
 import Login from './pages/login/Login'
 import Signup from './pages/signup/Signup'
+import Watch from './pages/watch/Watch'
 import { useContext } from 'react'
 import { AuthContext } from './context/AuthContext'
 
@@ -33,9 +34,9 @@ const App = () => {
 
 				{currentUser && (
 					<>
+					<Route path="/watch" element={<Watch />} /> 
 						{/* <Route path="/movies" element={<Home type="movies" />} />
-					<Route path="/series" element={<Home type="series" />} />
-					<Route path="/watch" element={<Watch />} /> */}
+					<Route path="/series" element={<Home type="series" />} />*/}
 					</>
 				)}
 			</Routes>
