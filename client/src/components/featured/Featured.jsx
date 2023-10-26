@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react'
 import './featured.scss'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import { useNavigate } from 'react-router-dom'
 
 
 const Featured = () => {
+	const navigate = useNavigate()
   return (
   	<div className="featured">
 			{/* {type && (
@@ -55,7 +57,7 @@ const Featured = () => {
 							} */}
 				</span>
 				<div className="buttons">
-					<button className="play">
+					<button className="play" onClick={() => navigate('/watch')}>
 						<PlayArrowIcon />
 						<span>Play</span>
 					</button>

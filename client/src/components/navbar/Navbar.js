@@ -29,16 +29,16 @@ const Navbar = () => {
 					<Link to={'/'} className='link'>
 						<span>Homepage</span>
 					</Link>
-					<Link className='link'>
+					<Link to={'/series'}className='link'>
 						<span>Series</span>
 					</Link>
-					<Link  className='link'>
+					<Link to={'/movies'} className='link'>
 						<span>Movies</span>
 					</Link>
-					<Link className='link'>
+					<Link to={'/new'} className='link'>
 						<span>New and Popular</span>
 					</Link>
-					<Link className='link'>
+					<Link to={'/myList'}className='link'>
 						<span>My List</span>
 					</Link>
 				</div>
