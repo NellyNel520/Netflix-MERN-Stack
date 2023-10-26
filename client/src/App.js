@@ -1,5 +1,5 @@
 import React from 'react'
-import './index.css'
+import './app.scss'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/home/Home'
 import Login from './pages/login/Login'
@@ -8,8 +8,8 @@ import { useContext } from 'react'
 import { AuthContext } from './context/AuthContext'
 
 const App = () => {
-const currentUser = false 
-	// const { currentUser } = useContext(AuthContext)
+// const currentUser = false 
+	const { currentUser } = useContext(AuthContext)
 
 
 	return (
