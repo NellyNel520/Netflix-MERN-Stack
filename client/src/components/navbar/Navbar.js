@@ -9,6 +9,8 @@ import { firebaseAuth } from "../../utils/firebase";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [showSearch, setShowSearch] = useState(false);
+  const [inputHover, setInputHover] = useState(false);
 
 	window.onscroll = () => {
 		setIsScrolled(window.pageYOffset === 0 ? false : true)
@@ -41,7 +43,34 @@ const Navbar = () => {
 					</Link>
 				</div>
 				<div className="right">
+
+        <div className={`search ${showSearch ? "show-search" : ""}`}>
+            <button
+              onFocus={() => setShowSearch(true)}
+              onBlur={() => {
+                if (!inputHover) {
+                  setShowSearch(false);
+                }
+              }}
+            >
 					<SearchIcon className="icon" />
+
+          </button>
+          <input
+              type="text"
+              placeholder="Search"
+              onMouseEnter={() => setInputHover(true)}
+              onMouseLeave={() => setInputHover(false)}
+              onBlur={() => {
+                setShowSearch(false);
+                setInputHover(false);
+              }}
+            />
+
+          </div>
+
+
+
 					<span>KIDS</span>
 					<NotificationsIcon className="icon" />
 					<img
