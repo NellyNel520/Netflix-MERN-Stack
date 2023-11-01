@@ -4,7 +4,7 @@ import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutl
 import './list.scss'
 import ListItem from '../listItem/ListItem'
 
-const List = () => {
+const List = ({genre, genres}) => {
   const [isMoved, setIsMoved] = useState(false) 
 	const [slideNumber, setSliderNumber] = useState(0)
 	const listRef = useRef()
@@ -26,7 +26,7 @@ const List = () => {
 
   return (
    <div className="list">
-			<span className="listTitle">Continue Watching</span>
+			<span className="listTitle">{genre.name}</span>
 			<div className="wrapper">
 				<ArrowBackIosNewOutlinedIcon
 					className="sliderArrow left"

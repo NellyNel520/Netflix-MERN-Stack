@@ -44,7 +44,7 @@ const createArrayFromRawData = (array, moviesArray, genres) => {
 
 const getRawData = async (api, genres, paging = false) => {
   const moviesArray = [];
-  for (let i = 1; moviesArray.length < 60 && i < 10; i++) {
+  for (let i = 1; moviesArray.length < 100 && i < 10; i++) {
     const {
       data: { results },
     } = await axios.get(`${api}${paging ? `&page=${i}` : ""}`);
