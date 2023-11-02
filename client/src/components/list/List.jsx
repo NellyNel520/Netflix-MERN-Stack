@@ -4,10 +4,19 @@ import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutl
 import './list.scss'
 import ListItem from '../listItem/ListItem'
 
-const List = ({genre, genres}) => {
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchDataByGenre } from '../../store'
+import axios from 'axios'
+import { API_KEY, TMDB_BASE_URL } from "../../utils/constants";
+
+
+const List = ({data, title }) => {
   const [isMoved, setIsMoved] = useState(false) 
 	const [slideNumber, setSliderNumber] = useState(0)
 	const listRef = useRef()
+	const dispatch = useDispatch();
+
 
   const handleClick = (direction) => {
 		setIsMoved(true)
@@ -24,9 +33,11 @@ const List = ({genre, genres}) => {
 	}
 
 
+
+
   return (
    <div className="list">
-			<span className="listTitle">{genre.name}</span>
+			<span className="listTitle">{title}</span>
 			<div className="wrapper">
 				<ArrowBackIosNewOutlinedIcon
 					className="sliderArrow left"
@@ -34,7 +45,7 @@ const List = ({genre, genres}) => {
 					style={{ display: !isMoved && 'none' }}
 				/>
 				<div className="container" ref={listRef}>
-					<ListItem index={0}/>
+					{/* <ListItem index={0}/>
 					<ListItem index={1}/>
 					<ListItem index={2}/>
 					<ListItem index={3}/>
@@ -43,13 +54,15 @@ const List = ({genre, genres}) => {
 					<ListItem index={6}/>
 					<ListItem index={7}/>
 					<ListItem index={8}/> 
-					<ListItem index={9}/>
+					<ListItem index={9}/> */}
 
 
 
-					{/* {movies.map((movie, i) => (
-						<ListItem index={i} movie={movie} key={movie.id} genres={genres} />
-					))} */}
+					{data.map((movie, i) => (
+						<ListItem index={i} movie={movie} key={movie.id} 
+						// genres={genres}
+						 />
+					))}
 				</div>
 
 				<ArrowForwardIosOutlinedIcon

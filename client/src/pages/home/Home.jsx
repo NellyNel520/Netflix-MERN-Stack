@@ -3,14 +3,16 @@ import './home.scss'
 import Navbar from '../../components/navbar/Navbar'
 import Featured from '../../components/featured/Featured'
 import List from '../../components/list/List'
+import HomeLists from '../../components/list/HomeLists'
 
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchMovies, getGenres } from '../../store'
+import { fetchMovies, getGenres, fetchShows } from '../../store'
 
 
 const Home = () => {
   const movies = useSelector((state) => state.netflix.movies);
+  const shows = useSelector((state) => state.netflix.shows);
   const genres = useSelector((state) => state.netflix.genres);
   const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
 
@@ -24,12 +26,14 @@ const Home = () => {
 
   useEffect(() => {
     if (genresLoaded) {
-      dispatch(fetchMovies({ genres, type: "all" }));
+      dispatch(fetchMovies({ genres, type: "movie" }));
+      dispatch(fetchShows({ genres, type: "tv" }));
     }
   }, [genresLoaded]);
 
   // console.log(movies)
 // console.log(genres)
+// console.log(shows)
   return (
     <div className='home'>
       <Navbar />
@@ -40,7 +44,9 @@ const Home = () => {
       <List />
       <List /> */}
 
-      {genres ? genres.map((genre) => <List genre={genre} key={genre.id} genres={genres}/>) : (null)}
+      <HomeLists movies={movies} shows={shows}/>
+
+    
 
 
     </div>
