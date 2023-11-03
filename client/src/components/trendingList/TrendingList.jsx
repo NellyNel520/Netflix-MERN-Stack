@@ -34,7 +34,7 @@ const TrendingList = ({data, title}) => {
         style={{ display: !isMoved && 'none' }}
       />
       <div className="container" ref={listRef}>
-        {data.slice(0, 10).map((item, i) => (
+        {data.map((item, i) => (
           <TrendingItem index={i} item={item} key={item.id} />
         ))}
       </div>

@@ -11,7 +11,7 @@ import axios from 'axios'
 import { API_KEY, TMDB_BASE_URL } from "../../utils/constants";
 
 
-const List = ({data, title }) => {
+const List = ({data, title, type }) => {
   const [isMoved, setIsMoved] = useState(false) 
 	const [slideNumber, setSliderNumber] = useState(0)
 	const listRef = useRef()
@@ -59,7 +59,7 @@ const List = ({data, title }) => {
 
 
 					{data.map((movie, i) => (
-						<ListItem index={i} movie={movie} key={movie.id} 
+						<ListItem index={i} movie={movie} key={movie.id} type={type}
 						// genres={genres}
 						 />
 					))}

@@ -6,7 +6,7 @@ import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDown
 import './trendingItem.scss'
 
 
-
+ 
 const TrendingItem = ({ index, item }) => {
   const [isHovered, setIsHovered] = useState(false)
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
@@ -39,7 +39,10 @@ const TrendingItem = ({ index, item }) => {
 			) : null}
 			{isHovered && (
 				<>
-			
+				<img
+						src={`${BASE_URL}/${item.image}`}
+						alt="movie cover"
+					/>
 
 					{/* <YouTube
 						videoId={videoId2}
@@ -50,6 +53,7 @@ const TrendingItem = ({ index, item }) => {
 						}}
 					/> */}
 					{/* <video src={trailer} autoPlay={true} loop /> */}
+					
 		
 					<div className="itemInfo">
 						<p>{item.name}</p>

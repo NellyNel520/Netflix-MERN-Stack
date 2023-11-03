@@ -12,65 +12,50 @@ import YouTube from 'react-youtube'
 import axios from 'axios'
 import { API_KEY, TMDB_BASE_URL } from "../../utils/constants";
 
-const ListItem = ({ index, movie, genres }) => {
+const ListItem = ({ index, movie, genres, type}) => {
 	const [isHovered, setIsHovered] = useState(false)
-	// const [genreNames, setGenreNames] = useState([])
-	// const [runtime, setRuntime] = useState('')
-	// const [releaseDates, setReleaseDates] = useState([])
+	const [runtime, setRuntime] = useState('')
+	const [releaseDates, setReleaseDates] = useState([])
 	// const [videoId, setVideoId] = useState('')
-	// const genreIds = movie.genre_ids
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
 	const navigate = useNavigate()
-	console.log(movie)
+	// console.log(movie)
 
-	// useEffect(() => {
-	// 	const getGenreTitle = () => {
-	// 		try {
-	// 			const movieGenres = genres.filter(function (item) {
-	// 				return genreIds.indexOf(item.id) > -1
-	// 			})
-	// 			const genreTitles = movieGenres.map((s) => s.name)
-	// 			// console.log(movieGenres)
-	// 			// console.log(genreTitles.toString())
-	// 			setGenreNames(genreTitles)
-	// 		} catch (err) {
-	// 			console.log(err)
-	// 		}
-	// 	}
-
-	// 	const getRunTime = () => {
-	// 		axios
-	// 			.get(
-	// 				`${TMDB_BASE_URL}/movie/${movie.id}?api_key=${API_KEY}&language=en-US&append_to_response=release_dates
-	// 	`
-	// 			)
-	// 			.then((response) => {
-	// 				// console.log(response.data.release_dates.results)
-	// 				setRuntime(response.data.runtime)
-	// 				setReleaseDates(response.data.release_dates.results)
-	// 			})
-	// 			.catch((error) => {
-	// 				console.log(error)
-	// 			})
-	// 	}
+	useEffect(() => {
+		const getRunTime = () => {
+			axios
+				.get(
+					// `${TMDB_BASE_URL}/${type}/${movie.id}?api_key=${API_KEY}&language=en-US&append_to_response=release_dates`
+					`https://api.themoviedb.org/3/${type}/${movie.id}?api_key=1b3318f6cac22f830b1d690422391493&language=en-US&append_to_response=release_dates`
+					
+					
+				)
+				.then((response) => {
+					console.log(response.data.release_dates.results)
+					setRuntime(response.data.runtime)
+					setReleaseDates(response.data.release_dates.results)
+				})
+				.catch((error) => {
+					console.log(error)
+				})
+		}
 
 
-	// 	getGenreTitle()
-	// 	getRunTime()
-	// }, [movie, genres, genreIds])
+		getRunTime()
+	}, [movie, type])
 
 	// console.log(genreNames)
 
 	// const releaseDate = new Date(movie.release_date)
 	// const releaseYear = releaseDate.getFullYear()
-	// const hours = Math.floor(runtime / 60)
-	// const mins = runtime % 60
+	const hours = Math.floor(runtime / 60)
+	const mins = runtime % 60
 
-	// const UsRating = releaseDates.filter(function (item) {
-	// 	return item.iso_3166_1 === 'US'
-	// })
-	// const rating = UsRating[0]?.release_dates[0]?.certification
-	// // console.log(rating)
+	const UsRating = releaseDates.filter(function (item) {
+		return item.iso_3166_1 === 'US'
+	})
+	const rating = UsRating[0]?.release_dates[0]?.certification
+	// console.log(rating)
 
 	return (
 		<div
@@ -93,10 +78,10 @@ const ListItem = ({ index, movie, genres }) => {
 			{isHovered && (
 				<>
 					<img
-						src={
-							'https://vidasalseracom.files.wordpress.com/2021/08/vivo-2-vidasalsera.jpg?w=1200'
-						}
-						// src={`${BASE_URL}/${movie.backdrop_path}`} 
+						// src={
+						// 	'https://vidasalseracom.files.wordpress.com/2021/08/vivo-2-vidasalsera.jpg?w=1200'
+						// }
+						src={`${BASE_URL}/${movie.image}`} 
 						alt="movie cover"
 					/>
 					{/* <YouTube
@@ -112,8 +97,8 @@ const ListItem = ({ index, movie, genres }) => {
 					{/* <video src={trailer} autoPlay={true} loop /> */}
 					{/* <iframe className="video" src="https://www.youtube.com/embed/BOe8L69JpVI?autoplay=1&mute=1" title="movie title" frameborder="0" ></iframe> */}
 					<div className="itemInfo">
-						{/* <p>{movie.title}</p> */}
-						<p>Vivo</p>
+						<p>{movie.name}</p>
+						{/* <p>{movie.image}</p> */}
 						<div className="icons">
 							<div>
 								<PlayArrowIcon
@@ -130,14 +115,14 @@ const ListItem = ({ index, movie, genres }) => {
 						</div>
 
 						<div className="itemInfoTop">
-							{/* {rating ? (
+							{rating ? (
               <span className="limit">{rating}</span>
             ) : (
               <span className="limit">NR</span>
-            )} */}
-							<span className="limit">NR</span>
-							{/* <span className='time'>{runtime > 60 ? `${hours}h ${mins}m` : `${runtime}m`}</span> */}
-							<span className="time">1h 20m</span>
+            )}
+							{/* <span className="limit">NR</span> */}
+							<span className='time'>{runtime > 60 ? `${hours}h ${mins}m` : `${runtime}m`}</span>
+							{/* <span className="time">1h 20m</span> */}
 							<span className="limit">4K</span>
 						</div>
 
@@ -148,10 +133,10 @@ const ListItem = ({ index, movie, genres }) => {
           </div> */}
 
 						<div className="genre">
-							{/* {genreNames.slice(0, 4).map((name) => (
-              <span className="test">{name}</span>
-            ))} */}
-							<span className="test">Comedy</span>
+						{movie.genres.map((name) => (
+								<span className="test">{name}</span>
+							))}
+							{/* <span className="test">Comedy</span> */}
 						</div>
 					</div>
 				</>
