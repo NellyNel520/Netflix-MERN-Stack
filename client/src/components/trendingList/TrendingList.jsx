@@ -44,7 +44,7 @@ function TrendingList ({data, title}) {
         onClick={() => handleClick('right')}
       />
     </div>
-  </div>
+  </div> 
   )
 }
 

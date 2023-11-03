@@ -16,7 +16,7 @@ const Home = ({type}) => {
 	const genresLoaded = useSelector((state) => state.netflix.genresLoaded)
 
 	const navigate = useNavigate()
-	const dispatch = useDispatch()
+	const dispatch = useDispatch() 
 
 	useEffect(() => {
 		dispatch(getGenres())   

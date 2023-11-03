@@ -14,14 +14,14 @@ const HomeLists = ({ movies, shows }) => {
 
 	return (
 		<div>
-			<TrendingList
-				data={getMoviesFromRange(0, 10)}
-				title="Top 10 Movies in the U.S. Today"
-			/>
 			<List
 				data={getMoviesFromRange(11, 25)}
 				type="movie"
-				title="Trending Now"
+				title="Continue Watching"
+			/>
+			<TrendingList
+				data={getMoviesFromRange(0, 10)}
+				title="Top 10 Movies in the U.S. Today"
 			/>
 			<List
 				data={getMoviesFromRange(26, 40)}
