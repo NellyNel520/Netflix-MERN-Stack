@@ -16,7 +16,7 @@ const ListItem = ({ index, movie, genres, type}) => {
 	const [isHovered, setIsHovered] = useState(false)
 	const [runtime, setRuntime] = useState('')
 	const [releaseDates, setReleaseDates] = useState([])
-	// const [videoId, setVideoId] = useState('')
+	const [videoId, setVideoId] = useState('')
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
 	const navigate = useNavigate()
 	// console.log(movie)
@@ -39,10 +39,30 @@ const ListItem = ({ index, movie, genres, type}) => {
 				.catch((error) => {
 					console.log(error)
 				})
+		} 
+
+		const getMovieTrailer = async () => {
+			// await movieTrailer(null, {
+			// 	id: true,
+			// 	apiKey: '1b3318f6cac22f830b1d690422391493',
+			// 	tmdbId: movie.id,
+			// })
+			await movieTrailer(movie.name, {
+				id: true,
+				multi: true,
+			})
+				.then(
+					(response) => 
+					// console.log(response, 'herrrreeeee')
+					setVideoId(response[1])
+				)
+				.catch((err) => console.log(err))
 		}
 
 
+
 		getRunTime()
+		getMovieTrailer()
 	}, [movie, type])
 
 	// console.log(genreNames)
@@ -78,13 +98,29 @@ const ListItem = ({ index, movie, genres, type}) => {
 
 			{isHovered && (
 				<>
-					<img
+				{videoId ? (<YouTube
+          videoId={videoId}
+          opts={{
+            // height: '200px',
+            // width: '438px',
+            height: '140px',
+            width: '325px',
+            playerVars: { autoplay: 1, mute: 1 },
+          }}
+        />) : (<img
 						// src={
 						// 	'https://vidasalseracom.files.wordpress.com/2021/08/vivo-2-vidasalsera.jpg?w=1200'
 						// }
 						src={`${BASE_URL}/${movie.image}`} 
 						alt="movie cover"
-					/>
+					/> )}
+					{/* <img
+						// src={
+						// 	'https://vidasalseracom.files.wordpress.com/2021/08/vivo-2-vidasalsera.jpg?w=1200'
+						// }
+						src={`${BASE_URL}/${movie.image}`} 
+						alt="movie cover"
+					/> */}
 					{/* <YouTube
           videoId={videoId}
           opts={{

@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom'
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
-// import movieTrailer from 'movie-trailer'
-// import YouTube from 'react-youtube'
+import movieTrailer from 'movie-trailer'
+import YouTube from 'react-youtube'
 import axios from 'axios'
 import { API_KEY, TMDB_BASE_URL } from '../../utils/constants'
 
@@ -16,7 +16,7 @@ const Show = ({ index, movie, genres, type }) => {
 	const [isHovered, setIsHovered] = useState(false)
 	const [showDetails, setShowDetails] = useState({})
 	const [releaseDates, setReleaseDates] = useState([])
-
+	const [videoId, setVideoId] = useState('')
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
 	const navigate = useNavigate()
 
@@ -53,18 +53,36 @@ const Show = ({ index, movie, genres, type }) => {
 				})
 		}
 
-    getSeriesDetails()
-    getContentRatings()
+		const getMovieTrailer = async () => {
+			// await movieTrailer(null, {
+			// 	id: true,
+			// 	apiKey: '1b3318f6cac22f830b1d690422391493',
+			// 	tmdbId: movie.id,
+			// })
+			await movieTrailer(movie.name, {
+				id: true,
+				videoType: 'tv',
+				multi: true,
+			})
+				.then((response) =>
+					// console.log(response, 'herrrreeeee')
+					setVideoId(response[0])
+				)
+				.catch((err) => console.log(err))
+		}
+
+		getSeriesDetails()
+		getContentRatings()
+		getMovieTrailer()
 	}, [movie])
 
-
-  const UsRating = releaseDates.filter(function (item) {
+	const UsRating = releaseDates.filter(function (item) {
 		return item.iso_3166_1 === 'US'
 	})
 	const rating = UsRating[0]?.rating
 
-
-	return <div
+	return (
+		<div
 			className="listItem"
 			style={{ left: isHovered && index * 225 - 50 + index * 2.5 }}
 			onMouseEnter={() => setIsHovered(true)}
@@ -75,7 +93,7 @@ const Show = ({ index, movie, genres, type }) => {
 					// src={
 					// 	'https://vidasalseracom.files.wordpress.com/2021/08/vivo-2-vidasalsera.jpg?w=1200'
 					// }
-					src={`${BASE_URL}/${movie.image}`} 
+					src={`${BASE_URL}/${movie.image}`}
 					alt="movie cover"
 				/>
 			) : null}
@@ -83,25 +101,26 @@ const Show = ({ index, movie, genres, type }) => {
 
 			{isHovered && (
 				<>
-					<img
-						// src={
-						// 	'https://vidasalseracom.files.wordpress.com/2021/08/vivo-2-vidasalsera.jpg?w=1200'
-						// }
-						src={`${BASE_URL}/${movie.image}`} 
-						alt="movie cover"
-					/>
-					{/* <YouTube
-          videoId={videoId}
-          opts={{
-            // height: '200px',
-            // width: '438px',
-            height: '140px',
-            width: '325px',
-            playerVars: { autoplay: 1, mute: 1 },
-          }}
-        /> */}
-					{/* <video src={trailer} autoPlay={true} loop /> */}
-					{/* <iframe className="video" src="https://www.youtube.com/embed/BOe8L69JpVI?autoplay=1&mute=1" title="movie title" frameborder="0" ></iframe> */}
+					{videoId ? (
+						<YouTube
+							videoId={videoId}
+							opts={{
+								// height: '200px',
+								// width: '438px',
+								height: '140px',
+								width: '325px',
+								playerVars: { autoplay: 1, mute: 1 },
+							}}
+						/>
+					) : (
+						<img
+							// src={
+							// 	'https://vidasalseracom.files.wordpress.com/2021/08/vivo-2-vidasalsera.jpg?w=1200'
+							// }
+							src={`${BASE_URL}/${movie.image}`}
+							alt="movie cover"
+						/>
+					)}
 					<div className="itemInfo">
 						<p>{movie.name}</p>
 						{/* <p>{movie.image}</p> */}
@@ -122,17 +141,19 @@ const Show = ({ index, movie, genres, type }) => {
 
 						<div className="itemInfoTop">
 							{rating ? (
-              <span className="limit">{rating}</span>
-            ) : (
-              <span className="limit">NR</span>
-            )}
+								<span className="limit">{rating}</span>
+							) : (
+								<span className="limit">NR</span>
+							)}
 							{/* <span className="limit">NR</span> */}
 
 							<span>
-              {/* if 1 season episodes.length and if more that 1 season seasons.length */}
-								{showDetails.number_of_seasons > 1 ? `${showDetails.number_of_seasons} Seasons` : `${showDetails.number_of_episodes} Episodes`} 
+								{/* if 1 season episodes.length and if more that 1 season seasons.length */}
+								{showDetails.number_of_seasons > 1
+									? `${showDetails.number_of_seasons} Seasons`
+									: `${showDetails.number_of_episodes} Episodes`}
 							</span>
-              
+
 							{/* <span className="time">1h 20m</span> */}
 							<span className="limit">4K</span>
 						</div>
@@ -144,7 +165,7 @@ const Show = ({ index, movie, genres, type }) => {
           </div> */}
 
 						<div className="genre">
-						{movie.genres.map((name) => (
+							{movie.genres.map((name) => (
 								<span className="test">{name}</span>
 							))}
 							{/* <span className="test">Comedy</span> */}
@@ -153,6 +174,7 @@ const Show = ({ index, movie, genres, type }) => {
 				</>
 			)}
 		</div>
+	)
 }
 
 export default Show
