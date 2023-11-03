@@ -1,4 +1,4 @@
-import './series.scss'
+import './series.scss' 
 import Navbar from '../../components/navbar/Navbar'
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'

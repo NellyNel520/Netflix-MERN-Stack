@@ -5,6 +5,8 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useNavigate } from 'react-router-dom'
 import {fetchShowDataByGenre, fetchDataByGenre} from '../../store'
 import { useSelector, useDispatch } from 'react-redux'
+import SelectGenre from '../selectGenre/SelectGenre'
+import SelectGenreShows from '../selectGenre/SelectGenreShows'
 
 
 const Featured = ({type, genres}) => {
@@ -12,32 +14,12 @@ const Featured = ({type, genres}) => {
 	const dispatch = useDispatch();
   return (
   	<div className="featured">
-			{type && (
-				<div className="category">
-					<span>{type === 'movie' ? 'Movies' : 'Series'}</span>
-					<select name="genre" id="genre"
-				onChange={(e) => {
-					if (type === 'movies'){
-						dispatch(
-              fetchDataByGenre({genres, genre: e.target.value, type})
-            ) 
-					}
-					if (type === 'tv'){
-						dispatch(
-              fetchDataByGenre({genres, genre: e.target.value, type})
-            ) 
-					}
-				}}
-					>
-						{genres.map((genre) => {
-              return (
-              <option value={genre.id} key={genre.id}>{genre.name}</option> );
-            }
-            ) }
+			{type === 'movie' && (
+				<SelectGenre type={type} genres={genres}/>
+			)}
 
-
-					</select>
-				</div>
+			{type === 'tv' && (
+				(<SelectGenreShows type={type} genres={genres}/>)
 			)}
 
 			<img
