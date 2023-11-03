@@ -2,16 +2,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined'
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined'
 import './trendingList.scss'
-import TrendingItem from '../trendingItem/TrendingItem'
+import TrendingShow from '../trendingItem/TrendingShow'
 
-
- 
-const TrendingList = ({data, title}) => {
+const TrendingShowList = ({data, title}) => {
   const [isMoved, setIsMoved] = useState(false)
 	const [slideNumber, setSliderNumber] = useState(0)
 	const listRef = useRef()
 
-  const handleClick = (direction) => {
+ const handleClick = (direction) => {
 		setIsMoved(true)
 		let distance = listRef.current.getBoundingClientRect().x - 50
 		if (direction === 'left' && slideNumber > 0) {
@@ -35,7 +33,7 @@ const TrendingList = ({data, title}) => {
       />
       <div className="container" ref={listRef}>
         {data.map((item, i) => (
-          <TrendingItem index={i} item={item} key={item.id} />
+          <TrendingShow index={i} item={item} key={item.id} />
         ))}
       </div>
 
@@ -48,4 +46,4 @@ const TrendingList = ({data, title}) => {
   )
 }
 
-export default TrendingList
+export default TrendingShowList

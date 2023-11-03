@@ -4,23 +4,59 @@ import AddIcon from '@mui/icons-material/Add'
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
 import './trendingItem.scss'
- 
+import axios from 'axios'
+
 
  
-const TrendingItem = ({ index, item }) => {
+ const TrendingShow = ({ index, item }) => {
   const [isHovered, setIsHovered] = useState(false)
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
+  const [showDetails, setShowDetails] = useState({})
+	const [releaseDates, setReleaseDates] = useState([])
 
-  // *** Icebox feature will revisit (need to see if i can make call via redux and update the respective item from movie ** 
-	// const [releaseDates, setReleaseDates] = useState([])
-	// const [runtime, setRuntime] = useState('')
+  useEffect(() => {
+		const getSeriesDetails = () => {
+			axios
+				.get(
+					`	https://api.themoviedb.org/3/tv/${item.id}?api_key=1b3318f6cac22f830b1d690422391493&language=en-US&append_to_response=release_dates
+      `
+				)
+				.then((response) => {
+					// console.log(response.data)
+					setShowDetails(response.data)
+					// setRuntime(response.data.runtime)
+					// setReleaseDates(response.data.release_dates.results)
+				})
+				.catch((error) => {
+					console.log(error)
+				})
+		}
 
- 
+		const getContentRatings = () => {
+			axios
+				.get(
+					`https://api.themoviedb.org/3/tv/${item.id}/content_ratings?api_key=1b3318f6cac22f830b1d690422391493&language=en-US&append_to_response=release_dates
+      `
+				)
+				.then((response) => {
+					// console.log(response.data.results)
+					setReleaseDates(response.data.results)
+				})
+				.catch((error) => {
+					console.log(error)
+				})
+		}
 
-// *** Icebox ***
-	// const hours = Math.floor(runtime / 60)
-	// const mins = runtime % 60
-  return (
+    getSeriesDetails()
+    getContentRatings()
+	}, [item])
+
+
+  const UsRating = releaseDates.filter(function (item) {
+		return item.iso_3166_1 === 'US'
+	})
+	const rating = UsRating[0]?.rating
+   return (
     <div
 			className="trendingListItem"
 			style={{ left: isHovered && index * 385 - 50 + index * 2.5 }}
@@ -69,16 +105,17 @@ const TrendingItem = ({ index, item }) => {
 						</div>
 
 						<div className="itemInfoTop">
-							{/* {rating ? (
+							{rating ? (
 								<span className="limit">{rating}</span>
 							) : (
 								<span className="limit">NR</span>
-							)} */}
-              <span className="limit">NR</span>
-
-							{/* <span className="time">
-								{runtime > 60 ? `${hours}h ${mins}m` : `${runtime}m`}
-							</span> */}
+							)}
+              {/* <span className="limit">NR</span> */}
+              <span>
+              {/* if 1 season episodes.length and if more that 1 season seasons.length */}
+								{showDetails.number_of_seasons > 1 ? `${showDetails.number_of_seasons} Seasons` : `${showDetails.number_of_episodes} Episodes`} 
+							</span>
+              
 							<span className="limit">HD</span>
 						</div>
 
@@ -97,7 +134,7 @@ const TrendingItem = ({ index, item }) => {
 				</>
 			)}
 		</div>
-  )
-}
-
-export default TrendingItem
+   )
+ }
+ 
+ export default TrendingShow
