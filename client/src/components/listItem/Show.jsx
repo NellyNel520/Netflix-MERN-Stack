@@ -128,7 +128,9 @@ export default React.memo(function Show({ index, movie, genres, type }) {
 							<div>
 								<PlayArrowIcon
 									className="icon"
-									onClick={() => navigate('/watch')}
+									onClick={() => navigate('/watch', {
+										state: { videoId: videoId, movie: movie }
+									})}
 								/>
 
 								{/* on click add to my list mongo db */}

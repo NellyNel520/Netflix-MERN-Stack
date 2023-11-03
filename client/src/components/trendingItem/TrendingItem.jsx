@@ -7,7 +7,9 @@ import './trendingItem.scss'
 import axios from 'axios'
 import movieTrailer from 'movie-trailer'
 import YouTube from 'react-youtube'
- 
+import { useNavigate } from 'react-router-dom'
+
+
 export default React.memo(
  
 function TrendingItem ({ index, item })  {
@@ -16,6 +18,7 @@ function TrendingItem ({ index, item })  {
 	const [videoId, setVideoId] = useState('')
 	const [releaseDates, setReleaseDates] = useState([])
 	const [runtime, setRuntime] = useState('')
+	const navigate = useNavigate()
 
  
 	useEffect(() => {
@@ -111,7 +114,9 @@ function TrendingItem ({ index, item })  {
 						<p>{item.name}</p>
 						<div className="icons">
 							<div>
-								<PlayArrowIcon className="icon" />
+								<PlayArrowIcon className="icon" 	onClick={() => navigate('/watch', {
+										state: { videoId: videoId, movie: item }
+									})}/>
 								<AddIcon className="icon" />
 								<ThumbUpAltOutlinedIcon className="icon" />
 							</div>
