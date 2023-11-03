@@ -10,9 +10,9 @@ import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDown
 import movieTrailer from 'movie-trailer'
 import YouTube from 'react-youtube'
 import axios from 'axios'
-import { API_KEY, TMDB_BASE_URL } from "../../utils/constants";
+import { API_KEY, TMDB_BASE_URL } from '../../utils/constants'
 
-export default React.memo(function ListItem({ index, movie, genres, type}) {
+export default React.memo(function ListItem({ index, movie, genres, type }) {
 	const [isHovered, setIsHovered] = useState(false)
 	const [runtime, setRuntime] = useState('')
 	const [releaseDates, setReleaseDates] = useState([])
@@ -22,14 +22,11 @@ export default React.memo(function ListItem({ index, movie, genres, type}) {
 	// console.log(movie)
 
 	useEffect(() => {
-		
 		const getRunTime = () => {
 			axios
 				.get(
 					// `${TMDB_BASE_URL}/${type}/${movie.id}?api_key=${API_KEY}&language=en-US&append_to_response=release_dates`
 					`https://api.themoviedb.org/3/${type}/${movie.id}?api_key=1b3318f6cac22f830b1d690422391493&language=en-US&append_to_response=release_dates`
-					
-					
 				)
 				.then((response) => {
 					console.log(response.data.release_dates.results)
@@ -39,7 +36,7 @@ export default React.memo(function ListItem({ index, movie, genres, type}) {
 				.catch((error) => {
 					console.log(error)
 				})
-		} 
+		}
 
 		const getMovieTrailer = async () => {
 			// await movieTrailer(null, {
@@ -51,15 +48,12 @@ export default React.memo(function ListItem({ index, movie, genres, type}) {
 				id: true,
 				multi: true,
 			})
-				.then(
-					(response) => 
+				.then((response) =>
 					// console.log(response, 'herrrreeeee')
 					setVideoId(response[1])
 				)
 				.catch((err) => console.log(err))
 		}
-
-
 
 		getRunTime()
 		getMovieTrailer()
@@ -90,7 +84,7 @@ export default React.memo(function ListItem({ index, movie, genres, type}) {
 					// src={
 					// 	'https://vidasalseracom.files.wordpress.com/2021/08/vivo-2-vidasalsera.jpg?w=1200'
 					// }
-					src={`${BASE_URL}/${movie.image}`} 
+					src={`${BASE_URL}/${movie.image}`}
 					alt="movie cover"
 				/>
 			) : null}
@@ -98,41 +92,20 @@ export default React.memo(function ListItem({ index, movie, genres, type}) {
 
 			{isHovered && (
 				<>
-				{videoId ? (<YouTube
-          videoId={videoId}
-          opts={{
-            // height: '200px',
-            // width: '438px',
-            height: '140px',
-            width: '325px',
-            playerVars: { autoplay: 1, mute: 1 },
-          }}
-        />) : (<img
-						// src={
-						// 	'https://vidasalseracom.files.wordpress.com/2021/08/vivo-2-vidasalsera.jpg?w=1200'
-						// }
-						src={`${BASE_URL}/${movie.image}`} 
-						alt="movie cover"
-					/> )}
-					{/* <img
-						// src={
-						// 	'https://vidasalseracom.files.wordpress.com/2021/08/vivo-2-vidasalsera.jpg?w=1200'
-						// }
-						src={`${BASE_URL}/${movie.image}`} 
-						alt="movie cover"
-					/> */}
-					{/* <YouTube
-          videoId={videoId}
-          opts={{
-            // height: '200px',
-            // width: '438px',
-            height: '140px',
-            width: '325px',
-            playerVars: { autoplay: 1, mute: 1 },
-          }}
-        /> */}
-					{/* <video src={trailer} autoPlay={true} loop /> */}
-					{/* <iframe className="video" src="https://www.youtube.com/embed/BOe8L69JpVI?autoplay=1&mute=1" title="movie title" frameborder="0" ></iframe> */}
+					{videoId ? (
+						<YouTube
+							videoId={videoId}
+							opts={{
+								// height: '200px',
+								// width: '438px',
+								height: '140px',
+								width: '325px',
+								playerVars: { autoplay: 1, mute: 1 },
+							}}
+						/>
+					) : (
+						<img src={`${BASE_URL}/${movie.image}`} alt="movie cover" />
+					)}
 					<div className="itemInfo">
 						<p>{movie.name}</p>
 						{/* <p>{movie.image}</p> */}
@@ -140,7 +113,11 @@ export default React.memo(function ListItem({ index, movie, genres, type}) {
 							<div>
 								<PlayArrowIcon
 									className="icon"
-									onClick={() => navigate('/watch')}
+									onClick={() =>
+										navigate('/watch', {
+											state: { videoId: videoId, movie: movie },
+										})
+									}
 								/>
 
 								{/* on click add to my list mongo db */}
@@ -153,15 +130,17 @@ export default React.memo(function ListItem({ index, movie, genres, type}) {
 
 						<div className="itemInfoTop">
 							{rating ? (
-              <span className="limit">{rating}</span>
-            ) : (
-              <span className="limit">NR</span>
-            )}
+								<span className="limit">{rating}</span>
+							) : (
+								<span className="limit">NR</span>
+							)}
 							{/* <span className="limit">NR</span> */}
 
 							{/* 	{showDetails.number_of_seasons > 1 ? `${showDetails.number_of_seasons} Seasons` : `${showDetails.number_of_episodes} Episodes`}  */}
 							{/* {type === 'tv' ? () :} */}
-							<span className='time'>{runtime > 60 ? `${hours}h ${mins}m` : `${runtime}m`}</span>
+							<span className="time">
+								{runtime > 60 ? `${hours}h ${mins}m` : `${runtime}m`}
+							</span>
 							{/* <span className="time">1h 20m</span> */}
 							<span className="limit">4K</span>
 						</div>
@@ -173,7 +152,7 @@ export default React.memo(function ListItem({ index, movie, genres, type}) {
           </div> */}
 
 						<div className="genre">
-						{movie.genres.map((name) => (
+							{movie.genres.map((name) => (
 								<span className="test">{name}</span>
 							))}
 							{/* <span className="test">Comedy</span> */}
@@ -183,6 +162,4 @@ export default React.memo(function ListItem({ index, movie, genres, type}) {
 			)}
 		</div>
 	)
-} )
-
-
+})
