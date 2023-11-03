@@ -1,17 +1,12 @@
- import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined'
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined'
 import './list.scss'
-import ListItem from '../listItem/ListItem'
+import Show from '../listItem/Show'
 
-import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchDataByGenre } from '../../store'
-import axios from 'axios'
-import { API_KEY, TMDB_BASE_URL } from "../../utils/constants";
 
-
-const List = ({data, title, type }) => {
+const ShowList = ({data, title, type }) => {
   const [isMoved, setIsMoved] = useState(false) 
 	const [slideNumber, setSliderNumber] = useState(0)
 	const listRef = useRef()
@@ -59,7 +54,7 @@ const List = ({data, title, type }) => {
 
 
 					{data.map((movie, i) => (
-						<ListItem index={i} movie={movie} key={movie.id} type={type}
+						<Show index={i} movie={movie} key={movie.id} type={type}
 						// genres={genres}
 						 />
 					))}
@@ -74,4 +69,4 @@ const List = ({data, title, type }) => {
   )
 }
 
-export default List
+export default ShowList

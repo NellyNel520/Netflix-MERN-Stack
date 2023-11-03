@@ -7,59 +7,64 @@ import { Link } from 'react-router-dom'
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
-import movieTrailer from 'movie-trailer'
-import YouTube from 'react-youtube'
+// import movieTrailer from 'movie-trailer'
+// import YouTube from 'react-youtube'
 import axios from 'axios'
-import { API_KEY, TMDB_BASE_URL } from "../../utils/constants";
+import { API_KEY, TMDB_BASE_URL } from '../../utils/constants'
 
-const ListItem = ({ index, movie, genres, type}) => {
+const Show = ({ index, movie, genres, type }) => {
 	const [isHovered, setIsHovered] = useState(false)
-	const [runtime, setRuntime] = useState('')
+	const [showDetails, setShowDetails] = useState({})
 	const [releaseDates, setReleaseDates] = useState([])
-	// const [videoId, setVideoId] = useState('')
+
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
 	const navigate = useNavigate()
-	// console.log(movie)
 
 	useEffect(() => {
-		
-		const getRunTime = () => {
+		const getSeriesDetails = () => {
 			axios
 				.get(
-					// `${TMDB_BASE_URL}/${type}/${movie.id}?api_key=${API_KEY}&language=en-US&append_to_response=release_dates`
-					`https://api.themoviedb.org/3/${type}/${movie.id}?api_key=1b3318f6cac22f830b1d690422391493&language=en-US&append_to_response=release_dates`
-					
-					
+					`	https://api.themoviedb.org/3/tv/${movie.id}?api_key=1b3318f6cac22f830b1d690422391493&language=en-US&append_to_response=release_dates
+      `
 				)
 				.then((response) => {
-					console.log(response.data.release_dates.results)
-					setRuntime(response.data.runtime)
-					setReleaseDates(response.data.release_dates.results)
+					// console.log(response.data)
+					setShowDetails(response.data)
+					// setRuntime(response.data.runtime)
+					// setReleaseDates(response.data.release_dates.results)
 				})
 				.catch((error) => {
 					console.log(error)
 				})
 		}
 
+		const getContentRatings = () => {
+			axios
+				.get(
+					`https://api.themoviedb.org/3/tv/${movie.id}/content_ratings?api_key=1b3318f6cac22f830b1d690422391493&language=en-US&append_to_response=release_dates
+      `
+				)
+				.then((response) => {
+					// console.log(response.data.results)
+					setReleaseDates(response.data.results)
+				})
+				.catch((error) => {
+					console.log(error)
+				})
+		}
 
-		getRunTime()
-	}, [movie, type])
+    getSeriesDetails()
+    getContentRatings()
+	}, [movie])
 
-	// console.log(genreNames)
 
-	// const releaseDate = new Date(movie.release_date)
-	// const releaseYear = releaseDate.getFullYear()
-	const hours = Math.floor(runtime / 60)
-	const mins = runtime % 60
-
-	const UsRating = releaseDates.filter(function (item) {
+  const UsRating = releaseDates.filter(function (item) {
 		return item.iso_3166_1 === 'US'
 	})
-	const rating = UsRating[0]?.release_dates[0]?.certification
-	// console.log(rating)
+	const rating = UsRating[0]?.rating
 
-	return (
-		<div
+
+	return <div
 			className="listItem"
 			style={{ left: isHovered && index * 225 - 50 + index * 2.5 }}
 			onMouseEnter={() => setIsHovered(true)}
@@ -123,9 +128,11 @@ const ListItem = ({ index, movie, genres, type}) => {
             )}
 							{/* <span className="limit">NR</span> */}
 
-							{/* 	{showDetails.number_of_seasons > 1 ? `${showDetails.number_of_seasons} Seasons` : `${showDetails.number_of_episodes} Episodes`}  */}
-							{/* {type === 'tv' ? () :} */}
-							<span className='time'>{runtime > 60 ? `${hours}h ${mins}m` : `${runtime}m`}</span>
+							<span>
+              {/* if 1 season episodes.length and if more that 1 season seasons.length */}
+								{showDetails.number_of_seasons > 1 ? `${showDetails.number_of_seasons} Seasons` : `${showDetails.number_of_episodes} Episodes`} 
+							</span>
+              
 							{/* <span className="time">1h 20m</span> */}
 							<span className="limit">4K</span>
 						</div>
@@ -146,7 +153,6 @@ const ListItem = ({ index, movie, genres, type}) => {
 				</>
 			)}
 		</div>
-	)
 }
 
-export default ListItem
+export default Show
