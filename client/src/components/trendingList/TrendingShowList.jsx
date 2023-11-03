@@ -4,7 +4,9 @@ import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutl
 import './trendingList.scss'
 import TrendingShow from '../trendingItem/TrendingShow'
 
-const TrendingShowList = ({data, title}) => {
+
+export default React.memo(
+function TrendingShowList ({data, title}) {
   const [isMoved, setIsMoved] = useState(false)
 	const [slideNumber, setSliderNumber] = useState(0)
 	const listRef = useRef()
@@ -46,4 +48,4 @@ const TrendingShowList = ({data, title}) => {
   )
 }
 
-export default TrendingShowList
+)

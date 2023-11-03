@@ -6,7 +6,7 @@ import Show from '../listItem/Show'
 
 import { useSelector, useDispatch } from "react-redux";
 
-const ShowList = ({data, title, type }) => {
+export default React.memo(function ShowList ({data, title, type }) {
   const [isMoved, setIsMoved] = useState(false) 
 	const [slideNumber, setSliderNumber] = useState(0)
 	const listRef = useRef()
@@ -69,4 +69,4 @@ const ShowList = ({data, title, type }) => {
   )
 }
 
-export default ShowList
+)

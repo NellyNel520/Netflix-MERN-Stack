@@ -12,7 +12,7 @@ import YouTube from 'react-youtube'
 import axios from 'axios'
 import { API_KEY, TMDB_BASE_URL } from "../../utils/constants";
 
-const ListItem = ({ index, movie, genres, type}) => {
+export default React.memo(function ListItem({ index, movie, genres, type}) {
 	const [isHovered, setIsHovered] = useState(false)
 	const [runtime, setRuntime] = useState('')
 	const [releaseDates, setReleaseDates] = useState([])
@@ -183,6 +183,6 @@ const ListItem = ({ index, movie, genres, type}) => {
 			)}
 		</div>
 	)
-}
+} )
 
-export default ListItem
+

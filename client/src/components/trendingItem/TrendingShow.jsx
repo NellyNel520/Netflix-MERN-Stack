@@ -8,16 +8,14 @@ import axios from 'axios'
 import movieTrailer from 'movie-trailer'
 import YouTube from 'react-youtube'
 
-
- 
- const TrendingShow = ({ index, item }) => {
-  const [isHovered, setIsHovered] = useState(false)
+export default React.memo(function TrendingShow({ index, item }) {
+	const [isHovered, setIsHovered] = useState(false)
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
-  const [showDetails, setShowDetails] = useState({})
+	const [showDetails, setShowDetails] = useState({})
 	const [releaseDates, setReleaseDates] = useState([])
 	const [videoId, setVideoId] = useState('')
 
-  useEffect(() => {
+	useEffect(() => {
 		const getSeriesDetails = () => {
 			axios
 				.get(
@@ -68,18 +66,17 @@ import YouTube from 'react-youtube'
 				.catch((err) => console.log(err))
 		}
 
-    getSeriesDetails()
-    getContentRatings()
+		getSeriesDetails()
+		getContentRatings()
 		getMovieTrailer()
 	}, [item])
 
-
-  const UsRating = releaseDates.filter(function (item) {
+	const UsRating = releaseDates.filter(function (item) {
 		return item.iso_3166_1 === 'US'
 	})
 	const rating = UsRating[0]?.rating
-   return (
-    <div
+	return (
+		<div
 			className="trendingListItem"
 			style={{ left: isHovered && index * 385 - 50 + index * 2.5 }}
 			onMouseEnter={() => setIsHovered(true)}
@@ -97,7 +94,7 @@ import YouTube from 'react-youtube'
 			) : null}
 			{isHovered && (
 				<>
-				{videoId ? (
+					{videoId ? (
 						<YouTube
 							videoId={videoId}
 							opts={{
@@ -117,8 +114,7 @@ import YouTube from 'react-youtube'
 							alt="movie cover"
 						/>
 					)}
-					
-		
+
 					<div className="itemInfo">
 						<p>{item.name}</p>
 						<div className="icons">
@@ -127,9 +123,8 @@ import YouTube from 'react-youtube'
 								<AddIcon className="icon" />
 								<ThumbUpAltOutlinedIcon className="icon" />
 							</div>
-						
-								<KeyboardArrowDownOutlinedIcon className="infoIcon" />
-						
+
+							<KeyboardArrowDownOutlinedIcon className="infoIcon" />
 						</div>
 
 						<div className="itemInfoTop">
@@ -138,12 +133,14 @@ import YouTube from 'react-youtube'
 							) : (
 								<span className="limit">NR</span>
 							)}
-              {/* <span className="limit">NR</span> */}
-              <span>
-              {/* if 1 season episodes.length and if more that 1 season seasons.length */}
-								{showDetails.number_of_seasons > 1 ? `${showDetails.number_of_seasons} Seasons` : `${showDetails.number_of_episodes} Episodes`} 
+							{/* <span className="limit">NR</span> */}
+							<span>
+								{/* if 1 season episodes.length and if more that 1 season seasons.length */}
+								{showDetails.number_of_seasons > 1
+									? `${showDetails.number_of_seasons} Seasons`
+									: `${showDetails.number_of_episodes} Episodes`}
 							</span>
-              
+
 							<span className="limit">HD</span>
 						</div>
 
@@ -162,7 +159,5 @@ import YouTube from 'react-youtube'
 				</>
 			)}
 		</div>
-   )
- }
- 
- export default TrendingShow
+	)
+})

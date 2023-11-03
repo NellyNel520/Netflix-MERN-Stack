@@ -8,9 +8,9 @@ import axios from 'axios'
 import movieTrailer from 'movie-trailer'
 import YouTube from 'react-youtube'
  
+export default React.memo(
  
- 
-const TrendingItem = ({ index, item }) => {
+function TrendingItem ({ index, item })  {
   const [isHovered, setIsHovered] = useState(false)
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
 	const [videoId, setVideoId] = useState('')
@@ -152,4 +152,4 @@ const TrendingItem = ({ index, item }) => {
   )
 }
 
-export default TrendingItem
+)

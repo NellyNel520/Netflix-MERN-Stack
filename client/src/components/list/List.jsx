@@ -10,12 +10,11 @@ import { fetchDataByGenre } from '../../store'
 import axios from 'axios'
 import { API_KEY, TMDB_BASE_URL } from "../../utils/constants";
 
-
-const List = ({data, title, type }) => {
+export default React.memo(function List ({data, title, type })  {
   const [isMoved, setIsMoved] = useState(false) 
 	const [slideNumber, setSliderNumber] = useState(0)
 	const listRef = useRef()
-	const dispatch = useDispatch();
+	const dispatch = useDispatch(); 
 
 
   const handleClick = (direction) => {
@@ -72,6 +71,6 @@ const List = ({data, title, type }) => {
 			</div>
 		</div>
   )
-}
+})
 
-export default List
+// export default List
