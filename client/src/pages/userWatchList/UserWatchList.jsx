@@ -6,9 +6,12 @@ const UserWatchList = () => {
   return (
     <div className='container'>
       <Navbar />
-      UserWatchList
+      <div className='title'>
+
+      <span>My List</span>
+      </div>
     </div>
   )
 }
 
-export default UserWatchList
+export default UserWatchList 

@@ -19,7 +19,7 @@ const Home = () => {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		dispatch(getGenres()) 
+		dispatch(getGenres())  
 	}, [])
 
 	useEffect(() => {

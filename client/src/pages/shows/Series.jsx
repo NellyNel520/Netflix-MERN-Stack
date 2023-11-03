@@ -5,11 +5,11 @@ import SelectGenre from '../../components/selectGenre/SelectGenre'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchMovies, getGenres, fetchShows } from '../../store'
-import MoviesScreenLists from '../../components/listContainer/MoviesScreenLists'
+import ShowScreenLists from '../../components/listContainer/ShowScreenLists'
 
 
 const Series = () => { 
-const movies = useSelector((state) => state.netflix.movies);
+const shows = useSelector((state) => state.netflix.shows);
   const genres = useSelector((state) => state.netflix.genres);
   const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
 
@@ -22,7 +22,7 @@ const movies = useSelector((state) => state.netflix.movies);
 
   useEffect(() => {
     if (genresLoaded) {
-      dispatch(fetchMovies({ genres, type: "tv" }));
+      dispatch(fetchShows({ genres, type: "tv" }));
     }
   }, [dispatch, genres, genresLoaded]);
 
@@ -33,7 +33,7 @@ const movies = useSelector((state) => state.netflix.movies);
       <SelectGenre type='tv' genres={genres}/>
 
       <div className="listContainer">
-				<MoviesScreenLists movies={movies} />
+				<ShowScreenLists shows={shows} />
 			</div>
     </div>
   )
