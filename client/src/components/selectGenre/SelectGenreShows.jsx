@@ -1,20 +1,20 @@
 import React, {useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import {fetchDataByGenre} from '../../store'
+import {fetchShowDataByGenre} from '../../store'
 import './selectGenre.scss'
 
-const SelectGenre = ({type, genres }) => {
+function SelectGenreShows({type, genres }) {
   const dispatch = useDispatch();
 
   return (
-    <div className='container'>
+     <div className='container'>
 
     	<div className="category">
         	<span>{type === 'movie' ? 'Movies' : 'Series'}</span>
           <select name="genre" id="genre" 
           onChange={(e) => {
             dispatch(
-              fetchDataByGenre({genres, genre: e.target.value, type})
+              fetchShowDataByGenre({genres, genre: e.target.value, type})
             ) 
           }}
           >
@@ -29,4 +29,4 @@ const SelectGenre = ({type, genres }) => {
   )
 }
 
-export default SelectGenre 
+export default SelectGenreShows

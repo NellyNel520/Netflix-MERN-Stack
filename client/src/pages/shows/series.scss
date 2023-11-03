@@ -1,3 +1,10 @@
-.container {
-  color: white;
+.shows{
+  background-color: var(--main-color);
+  // background-color: rgb(32, 31, 31);
+  overflow: hidden;
+} 
+
+.listContainer {
+  margin: 160px 0px;
+  // top: 100;
 }
