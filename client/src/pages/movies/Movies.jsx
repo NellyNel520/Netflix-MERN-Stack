@@ -1,10 +1,10 @@
 import './movies.scss'
 import Navbar from '../../components/navbar/Navbar'
 import React, { useEffect } from 'react'
-import SelectGenre from '../../components/selectGenre/SelectGenre'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchMovies, getGenres, fetchShows } from '../../store'
+import Featured from '../../components/featured/Featured'
 import MoviesScreenLists from '../../components/listContainer/MoviesScreenLists'
 
 
@@ -17,7 +17,7 @@ const movies = useSelector((state) => state.netflix.movies);
 	const dispatch = useDispatch()
  
 	useEffect(() => {
-		dispatch(getGenres())
+		dispatch(getGenres()) 
 	}, [])
 
   useEffect(() => {
@@ -30,7 +30,8 @@ const movies = useSelector((state) => state.netflix.movies);
   return (
     <div className='movies'>
       <Navbar />
-      <SelectGenre type='movie' genres={genres}/>
+      {/* <SelectGenre type='movie' genres={genres}/> */}
+      <Featured type='movie' genres={genres} />
 
       <div className="listContainer">
 				<MoviesScreenLists movies={movies} />

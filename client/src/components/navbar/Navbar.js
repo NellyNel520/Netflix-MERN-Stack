@@ -28,7 +28,7 @@ const Navbar = () => {
 					/>
 					<Link to={'/'} className='link'>
 						<span>Homepage</span>
-					</Link>
+					</Link> 
 					<Link to={'/series'}className='link'>
 						<span>Series</span>
 					</Link>

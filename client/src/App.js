@@ -12,7 +12,7 @@ import NewAndPopular from './pages/newAndPopular/NewAndPopular'
 import { useContext } from 'react'
 import { AuthContext } from './context/AuthContext'
 
-const App = () => {
+const App = () => { 
 	// const currentUser = false
 	const { currentUser } = useContext(AuthContext)
 
@@ -27,7 +27,7 @@ const App = () => {
 				<Route
 					path="/signup"
 					exact
-					element={!currentUser ? <Signup /> : <Navigate to={'/'} />}
+					element={!currentUser ? <Signup /> : <Navigate to={'/'} />} 
 				/>
 				<Route
 					path="/login"

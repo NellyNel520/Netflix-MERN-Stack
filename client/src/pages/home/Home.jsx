@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchMovies, getGenres, fetchShows } from '../../store'
 
-const Home = () => {
+const Home = ({type}) => {
 	const movies = useSelector((state) => state.netflix.movies)
 	const shows = useSelector((state) => state.netflix.shows)
 	const genres = useSelector((state) => state.netflix.genres)
@@ -19,7 +19,7 @@ const Home = () => {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		dispatch(getGenres())  
+		dispatch(getGenres())   
 	}, [])
 
 	useEffect(() => {
@@ -35,7 +35,7 @@ const Home = () => {
 	return (
 		<div className="home">
 			<Navbar />
-			<Featured />
+			<Featured type={type} genres={genres}/>
 			{/* 
       <List />
       <List />
