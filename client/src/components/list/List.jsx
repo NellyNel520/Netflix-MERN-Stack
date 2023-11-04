@@ -59,6 +59,8 @@ export default React.memo(function List ({data, title, type })  {
 
 					{data.map((movie, i) => (
 						<ListItem index={i} movie={movie} key={movie.id} type={type}
+				// 		currentUser={currentUser}
+				// usersSavedList={usersSavedList}
 						// genres={genres}
 						 />
 					))}

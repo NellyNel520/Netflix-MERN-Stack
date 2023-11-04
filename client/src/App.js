@@ -22,7 +22,7 @@ const App = () => {
 				<Route
 					path="/"
 					exact
-					element={currentUser ? <Home /> : <Navigate to={'/signup'} />}
+					element={currentUser ? <Home  /> : <Navigate to={'/signup'} />}
 				/>
 				<Route
 					path="/signup"
@@ -38,10 +38,10 @@ const App = () => {
 				{currentUser && (
 					<>
 						<Route exact path="/watch" element={<Watch />} />
-						<Route exact  path="/movies" element={<Movies />} />
-						<Route exact path="/series" element={<Series />} />
-						<Route exact path="/new" element={<NewAndPopular />} />
-						<Route exact path="/myList" element={<UserWatchList />} />
+						<Route exact  path="/movies" element={<Movies currentUser={currentUser}/>} />
+						<Route exact path="/series" element={<Series />} currentUser={currentUser}/>
+						<Route exact path="/new" element={<NewAndPopular />} currentUser={currentUser}/>
+						<Route exact path="/myList" element={<UserWatchList />} currentUser={currentUser}/>
 					</>
 				)}
 			</Routes>

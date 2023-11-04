@@ -8,7 +8,7 @@ import Featured from '../../components/featured/Featured'
 import MoviesScreenLists from '../../components/listContainer/MoviesScreenLists'
 
 
-const Movies = () => { 
+const Movies = ({currentUser}) => { 
 const movies = useSelector((state) => state.netflix.movies);
   const genres = useSelector((state) => state.netflix.genres);
   const genresLoaded = useSelector((state) => state.netflix.genresLoaded);

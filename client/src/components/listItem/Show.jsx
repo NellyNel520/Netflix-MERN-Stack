@@ -9,7 +9,7 @@ import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
 import movieTrailer from 'movie-trailer'
 import YouTube from 'react-youtube'
-import axios from 'axios'
+import axios from 'axios' 
 import { API_KEY, TMDB_BASE_URL } from '../../utils/constants'
 
 export default React.memo(function Show({ index, movie, genres, type }) {

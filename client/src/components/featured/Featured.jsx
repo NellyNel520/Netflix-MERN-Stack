@@ -51,7 +51,7 @@ const Featured = ({ type, genres, itemList, i}) => {
 			})
 		}
 	}, [type, id])
-	console.log(itemLogo)
+	// console.log(itemLogo)
 
 	useEffect(() => {
 		const getMovieTrailer = async () => {

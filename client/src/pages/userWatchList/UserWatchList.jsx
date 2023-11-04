@@ -9,9 +9,9 @@ const UserWatchList = () => {
       <div className='title'>
 
       <span>My List</span>
-      </div>
+      </div> 
     </div>
   )
 }
 
-export default UserWatchList 
+export default UserWatchList  

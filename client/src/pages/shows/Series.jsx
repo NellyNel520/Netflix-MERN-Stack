@@ -8,7 +8,7 @@ import ShowScreenLists from '../../components/listContainer/ShowScreenLists'
 import Featured from '../../components/featured/Featured'
 
 
-const Series = () => { 
+const Series = ({currentUser}) => { 
 const shows = useSelector((state) => state.netflix.shows);
   const genres = useSelector((state) => state.netflix.genres); 
   const genresLoaded = useSelector((state) => state.netflix.genresLoaded);

@@ -6,7 +6,7 @@ import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDown
 import './trendingItem.scss'
 import axios from 'axios'
 import movieTrailer from 'movie-trailer'
-import YouTube from 'react-youtube'
+import YouTube from 'react-youtube' 
 import { useNavigate } from 'react-router-dom'
 
 
