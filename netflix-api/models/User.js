@@ -6,7 +6,7 @@ const User = new Schema(
 		name: { type: String, required: true },
 		email: { type: String, required: true, unique: true},
 		likedMovies: Array,
-    savedMovies: Array,
+    // savedMovies: Array,
 	},
 	{ timestamps: true }
 )
