@@ -31,7 +31,7 @@ const shows = useSelector((state) => state.netflix.shows);
     <div className='movies'>
       <Navbar />
       {/* <SelectGenre type='tv' genres={genres}/> */}
-      <Featured type='tv' genres={genres} />
+      <Featured type='tv' genres={genres} itemList={shows} />
 
       <div className="listContainer">
 				<ShowScreenLists shows={shows} />

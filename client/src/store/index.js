@@ -81,6 +81,8 @@ const getRawData = async (api, genres, paging = false) => {
 
 
 
+
+
 export const fetchDataByGenre = createAsyncThunk(
 	'netflix/genre',
 	async ({ genre, type }, thunkAPI) => {
@@ -134,6 +136,8 @@ export const fetchShows = createAsyncThunk(
 		)
 	}
 )
+
+
 
 
 const NetflixSlice = createSlice({

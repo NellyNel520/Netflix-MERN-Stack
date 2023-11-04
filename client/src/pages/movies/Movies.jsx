@@ -15,7 +15,7 @@ const movies = useSelector((state) => state.netflix.movies);
 
   const navigate = useNavigate()
 	const dispatch = useDispatch()
- 
+  
 	useEffect(() => {
 		dispatch(getGenres()) 
 	}, [])
@@ -31,7 +31,7 @@ const movies = useSelector((state) => state.netflix.movies);
     <div className='movies'>
       <Navbar />
       {/* <SelectGenre type='movie' genres={genres}/> */}
-      <Featured type='movie' genres={genres} />
+      <Featured type='movie' genres={genres} itemList={movies} />
 
       <div className="listContainer">
 				<MoviesScreenLists movies={movies} />

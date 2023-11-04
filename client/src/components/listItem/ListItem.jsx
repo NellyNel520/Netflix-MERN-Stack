@@ -29,7 +29,7 @@ export default React.memo(function ListItem({ index, movie, genres, type }) {
 					`https://api.themoviedb.org/3/${type}/${movie.id}?api_key=1b3318f6cac22f830b1d690422391493&language=en-US&append_to_response=release_dates`
 				)
 				.then((response) => {
-					console.log(response.data.release_dates.results)
+					// console.log(response.data.release_dates.results)
 					setRuntime(response.data.runtime)
 					setReleaseDates(response.data.release_dates.results)
 				})

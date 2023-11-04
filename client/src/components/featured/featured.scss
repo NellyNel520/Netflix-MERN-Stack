@@ -32,13 +32,14 @@
     width: 35%;
     position: absolute;
     left: 50px;
-    bottom: 200px;
+    bottom: 180px;
     color: white;
     display: flex;
     flex-direction: column;
 
     img {
-      width: 400px;
+      width: 230px;
+      margin-bottom: 30px;
     }
 
     h1 {

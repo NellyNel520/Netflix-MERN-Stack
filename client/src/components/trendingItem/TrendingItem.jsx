@@ -32,7 +32,7 @@ function TrendingItem ({ index, item })  {
 					
 				)
 				.then((response) => {
-					console.log(response.data.release_dates.results)
+					// console.log(response.data.release_dates.results)
 					setRuntime(response.data.runtime)
 					setReleaseDates(response.data.release_dates.results)
 				})

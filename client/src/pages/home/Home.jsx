@@ -18,9 +18,9 @@ const Home = ({type}) => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch() 
 
-	useEffect(() => {
+	useEffect(() => { 
 		dispatch(getGenres())   
-	}, [])
+	}, []) 
 
 	useEffect(() => {
 		if (genresLoaded) {
@@ -35,7 +35,7 @@ const Home = ({type}) => {
 	return (
 		<div className="home">
 			<Navbar />
-			<Featured type={type} genres={genres}/>
+			<Featured type={type} genres={genres} itemList={movies}/>
 			{/* 
       <List />
       <List />
