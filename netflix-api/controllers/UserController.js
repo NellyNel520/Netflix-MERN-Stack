@@ -4,7 +4,7 @@ const { User } = require('../models')
 // REGISTER NEW USER 
 const Register = async (req, res) => {
   const newUser = new User({
-    name: req.body.name,
+    username: req.body.username,
     email: req.body.email,
   });
 

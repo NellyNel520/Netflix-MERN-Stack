@@ -30,9 +30,9 @@ const Signup = () => {
     try {
 			await createUserWithEmailAndPassword(firebaseAuth, email, password);
 			await registerUser({
-				username: username,
-				email: email,
-			})
+				username,
+				email
+			});
 		} catch (error) {
       console.log(error)
 		}
