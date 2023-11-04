@@ -35,7 +35,7 @@ const Home = ({type}) => {
 	return (
 		<div className="home">
 			<Navbar />
-			<Featured type={type} genres={genres} itemList={movies}/>
+			<Featured type={type} genres={genres} itemList={movies} i={4}/>
 			{/* 
       <List />
       <List />

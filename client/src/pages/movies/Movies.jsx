@@ -31,7 +31,7 @@ const movies = useSelector((state) => state.netflix.movies);
     <div className='movies'>
       <Navbar />
       {/* <SelectGenre type='movie' genres={genres}/> */}
-      <Featured type='movie' genres={genres} itemList={movies} />
+      <Featured type='movie' genres={genres} itemList={movies} i={8} />
 
       <div className="listContainer">
 				<MoviesScreenLists movies={movies} />
