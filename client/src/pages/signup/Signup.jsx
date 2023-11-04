@@ -28,7 +28,7 @@ const Signup = () => {
 		setPassword(passwordRef.current.value)
     try {
 			await createUserWithEmailAndPassword(firebaseAuth, email, password);
-			// navigate('/login')
+			// register user for mongo db (add axios call to redux)
 		} catch (error) {
       console.log(error)
 		}
