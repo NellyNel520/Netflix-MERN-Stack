@@ -47,27 +47,6 @@ const createArrayFromRawData = (array, moviesArray, genres) => {
 
 
 
-// const createShowArrayFromRawData = (array, showsArray, genres) => {
-//   array.forEach((show) => {
-//     const showGenres = [];
-//     show.genre_ids.forEach((genre) => {
-//       const name = genres.find(({ id }) => id === genre);
-//       if (name) showGenres.push(name.name);
-//     });
-//     if (show.backdrop_path)
-//       showsArray.push({
-//         id: show.id,
-//         name: show?.original_name ? show.original_name : show.original_title,
-//         image: show.backdrop_path,
-//         genres: showGenres.slice(0, 3),
-//         poster: show.poster_path,
-//         overview: show.overview,
-//         releaseDate: show.first_air_date,
-//         userRating: show.vote_average
-//       });
-//   });
-// };
-
 const getRawData = async (api, genres, paging = false) => {
 	const moviesArray = []
 	for (let i = 1; moviesArray.length < 100 && i < 10; i++) {
@@ -136,6 +115,10 @@ export const fetchShows = createAsyncThunk(
 		)
 	}
 )
+
+// register user to monogo DB && add item to "my list" calls made in frontend UI
+
+
 
 export const getUsersLikedMovies = createAsyncThunk(
   "netflix/getLiked",

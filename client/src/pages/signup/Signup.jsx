@@ -2,11 +2,12 @@ import React,  { useState, useRef } from 'react'
 import './signup.scss'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import {
+import { 
   createUserWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
 import { firebaseAuth } from '../../utils/firebase'
+import { registerUser } from '../../context/apiCalls';
 
 const Signup = () => {
   const [email, setEmail] = useState('') 
@@ -28,7 +29,10 @@ const Signup = () => {
 		setPassword(passwordRef.current.value)
     try {
 			await createUserWithEmailAndPassword(firebaseAuth, email, password);
-			// register user for mongo db (add axios call to redux)
+			await registerUser({
+				username: username,
+				email: email,
+			})
 		} catch (error) {
       console.log(error)
 		}
