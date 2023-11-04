@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react'
 import './listItem.scss'
-import PlayArrowIcon from '@mui/icons-material/PlayArrow'
-import AddIcon from '@mui/icons-material/Add'
-import CheckIcon from '@mui/icons-material/Check'
-import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
-import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
-import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined'
-import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
 import movieTrailer from 'movie-trailer'
 import YouTube from 'react-youtube'
 import axios from 'axios'
-import { API_KEY, TMDB_BASE_URL } from '../../utils/constants'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
 import { removeMovieFromLiked } from '../../store'
+// Icons
+import PlayArrowIcon from '@mui/icons-material/PlayArrow'
+import AddIcon from '@mui/icons-material/Add'
+import CheckIcon from '@mui/icons-material/Check'
+import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
+import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined'
+import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
+
 
 export default React.memo(function ListItem({ index, movie, genres, type, }) {
 	const [isHovered, setIsHovered] = useState(false)
@@ -27,7 +27,7 @@ export default React.memo(function ListItem({ index, movie, genres, type, }) {
 	const navigate = useNavigate()
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
-	const usersList = useSelector((state) => state.netflix.usersList)
+	
 
 	// console.log(usersList)
 	const dispatch = useDispatch() 

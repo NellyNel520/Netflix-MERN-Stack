@@ -173,11 +173,11 @@ const NetflixSlice = createSlice({
 			state.shows = action.payload
 		})
 		builder.addCase(getUsersLikedMovies.fulfilled, (state, action) => {
-		  state.movies = action.payload;
+		  state.usersList = action.payload;
 			// may need seperate state
 		});
 		builder.addCase(removeMovieFromLiked.fulfilled, (state, action) => {
-		  state.movies = action.payload;
+		  state.usersList = action.payload;
 				// may need seperate state
 		});
 	},

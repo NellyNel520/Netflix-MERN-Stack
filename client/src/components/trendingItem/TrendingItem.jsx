@@ -1,25 +1,35 @@
 import React, { useState, useEffect } from 'react'
-import PlayArrowIcon from '@mui/icons-material/PlayArrow'
-import AddIcon from '@mui/icons-material/Add'
-import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
-import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
 import './trendingItem.scss'
 import axios from 'axios'
 import movieTrailer from 'movie-trailer'
 import YouTube from 'react-youtube' 
 import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
+import { useSelector, useDispatch } from 'react-redux'
+import { removeMovieFromLiked } from '../../store'
+// Icons
+import PlayArrowIcon from '@mui/icons-material/PlayArrow'
+import AddIcon from '@mui/icons-material/Add'
+import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
+import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined'
+import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
+import CheckIcon from '@mui/icons-material/Check'
 
 
 export default React.memo(
  
 function TrendingItem ({ index, item })  {
   const [isHovered, setIsHovered] = useState(false)
+	const [isLiked, setIsLiked] = useState(false)
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
 	const [videoId, setVideoId] = useState('')
 	const [releaseDates, setReleaseDates] = useState([])
 	const [runtime, setRuntime] = useState('')
 	const navigate = useNavigate()
-
+	const { currentUser } = useContext(AuthContext)
+	const email = currentUser.email
+	const dispatch = useDispatch() 
  
 	useEffect(() => {
 		
@@ -73,6 +83,29 @@ function TrendingItem ({ index, item })  {
 	})
 	const rating = UsRating[0]?.release_dates[0]?.certification
 	// console.log(rating)
+
+	const addToList = async () => {
+		try {
+			await axios
+				.post('http://localhost:3001/api/user/add', {
+					email,
+					data: item,
+				})
+				.then(() => setIsLiked(true))
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	const removeFromList = async () => {
+		try {
+			await dispatch(removeMovieFromLiked({movieId: item.id, email}))
+			.then(() => setIsLiked(false))
+		} catch (error){
+			console.log(error)
+		}
+	}
+
   return (
     <div
 			className="trendingListItem"
@@ -117,7 +150,15 @@ function TrendingItem ({ index, item })  {
 								<PlayArrowIcon className="icon" 	onClick={() => navigate('/watch', {
 										state: { videoId: videoId, movie: item }
 									})}/>
-								<AddIcon className="icon" />
+								{isLiked ? (
+									<CheckIcon className="icon" title="Already saved" onClick={removeFromList}/>
+								) : (
+									<AddIcon
+										className="icon"
+										title="Add to my list"
+										onClick={addToList}
+									/>
+								)}
 								<ThumbUpAltOutlinedIcon className="icon" />
 							</div>
 						

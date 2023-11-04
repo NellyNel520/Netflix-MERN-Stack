@@ -1,24 +1,32 @@
-import React, { useState, useEffect } from 'react'
 import './listItem.scss'
-import PlayArrowIcon from '@mui/icons-material/PlayArrow'
-import AddIcon from '@mui/icons-material/Add'
-import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
-import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
-import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined'
-import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
 import movieTrailer from 'movie-trailer'
 import YouTube from 'react-youtube'
 import axios from 'axios' 
-import { API_KEY, TMDB_BASE_URL } from '../../utils/constants'
+import { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
+import { useSelector, useDispatch } from 'react-redux'
+import { removeMovieFromLiked } from '../../store'
+// Icons
+import PlayArrowIcon from '@mui/icons-material/PlayArrow'
+import AddIcon from '@mui/icons-material/Add'
+import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
+import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined'
+import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
+import CheckIcon from '@mui/icons-material/Check'
 
 export default React.memo(function Show({ index, movie, genres, type }) {
 	const [isHovered, setIsHovered] = useState(false)
+	const [isLiked, setIsLiked] = useState(false)
 	const [showDetails, setShowDetails] = useState({})
 	const [releaseDates, setReleaseDates] = useState([])
 	const [videoId, setVideoId] = useState('')
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
 	const navigate = useNavigate()
+	const { currentUser } = useContext(AuthContext)
+	const email = currentUser.email
+	const dispatch = useDispatch() 
 
 	useEffect(() => {
 		const getSeriesDetails = () => {
@@ -81,6 +89,28 @@ export default React.memo(function Show({ index, movie, genres, type }) {
 	})
 	const rating = UsRating[0]?.rating
 
+	const addToList = async () => {
+		try {
+			await axios
+				.post('http://localhost:3001/api/user/add', {
+					email,
+					data: movie,
+				})
+				.then(() => setIsLiked(true))
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	const removeFromList = async () => {
+		try {
+			await dispatch(removeMovieFromLiked({movieId: movie.id, email}))
+			.then(() => setIsLiked(false))
+		} catch (error){
+			console.log(error)
+		}
+	}
+
 	return (
 		<div
 			className="listItem"
@@ -134,7 +164,15 @@ export default React.memo(function Show({ index, movie, genres, type }) {
 								/>
 
 								{/* on click add to my list mongo db */}
-								<AddIcon className="icon" />
+								{isLiked ? (
+									<CheckIcon className="icon" title="Already saved" onClick={removeFromList}/>
+								) : (
+									<AddIcon
+										className="icon"
+										title="Add to my list"
+										onClick={addToList}
+									/>
+								)}
 
 								<ThumbUpAltOutlinedIcon className="icon" />
 							</div>
