@@ -13,8 +13,9 @@ import Navbar from '../../components/navbar/Navbar'
 const UserWatchList = () => {
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
-	const movies = useSelector((state) => state.netflix.movies)
 	const users = useSelector((state) => state.netflix.users)
+	// will add these states to redux toolkit once functional
+	const [movieList, setMovieList] = useState([])
 
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
@@ -23,22 +24,18 @@ const UserWatchList = () => {
 		dispatch(getAllUsers())
 	}, [dispatch])
 
-  // console.log(users)
+	// console.log(users)
 
-	// const getUserByEmail = (currentUser) => {
-	// 	try {
-	// 		const user = users.filter(function (item) {
-	// 			// Applying filter for the inserted text in search bar
-	// 			const itemData = item.email
-	// 			const userEmail = currentUser.email
+	useEffect(() => {
+		const getUserMovieList = () => {
+			const user = users.find((o) => o.email === email)
+			setMovieList(user.likedMovies)
+		}
 
-	// 			return itemData.indexOf(userEmail) > -1
-	// 		})
-    // set User info
-	// 	} catch (err) {
-	// 		console.log(err)
-	// 	}
-	// }
+		getUserMovieList()
+	}, [email, users])
+
+	console.log(movieList)
 
 
 	return (
