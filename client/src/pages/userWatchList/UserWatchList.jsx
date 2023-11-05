@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getAllUsers } from '../../store'
 import './userWatchList.scss'
 import Navbar from '../../components/navbar/Navbar'
-import ListItem from '../../components/listItem/ListItem'
+import Card from '../../components/card/Card'
 import Show from '../../components/listItem/Show'
 
 const UserWatchList = () => {
@@ -47,7 +47,7 @@ const UserWatchList = () => {
 					.get(`http://localhost:3001/api/user/${id}`)
 					.then((response) => {
 						// console.log(response.data.user.likedMovies)
-            setMovieList(response.data.user.likedMovies)
+						setMovieList(response.data.user.likedMovies)
 					})
 			} catch (error) {
 				console.log(error)
@@ -62,15 +62,20 @@ const UserWatchList = () => {
 	return (
 		<div className="container">
 			<Navbar />
-			<div className="title">
-				<span>My List</span>
+
+			<div className="content">
+				<div className="title">
+					<span>My List</span>
+				</div>
+				<div className="grid-cont">
+					<div className="grid">
+						{movieList.map((movie, i) => {
+							return <Card index={i} movie={movie} key={movie.id} />
+						})}
+					</div>
+				</div>
 			</div>
-			<div className="grid">
-				{movieList.map((movie, i) => {
-					return <ListItem index={i} movie={movie} key={movie.id} />
-				})}
-			</div>
-		</div>
+		</div> 
 	)
 }
 

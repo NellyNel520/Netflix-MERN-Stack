@@ -1,4 +1,5 @@
 import './listItem.scss'
+// import './listItem2.scss'
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import movieTrailer from 'movie-trailer'
@@ -90,10 +91,12 @@ export default React.memo(function ListItem({ index, movie, genres, type, }) {
 
 	const addToList = async () => {
 		try {
+			
 			await axios
 				.post('http://localhost:3001/api/user/add', {
 					email,
 					data: movie,
+					// data: {movie, type: 'movie'},
 				})
 				.then(() => setIsLiked(true))
 		} catch (error) {

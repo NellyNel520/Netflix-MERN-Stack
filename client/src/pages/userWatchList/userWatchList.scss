@@ -1,20 +1,41 @@
 .container {
   color: white;
 
+  .content {
+    margin: 2.3rem;
+    margin-top: 8rem;
+    gap: 3rem;
+   
+    
+ 
  
 .title{
-  display: flex;
+  // display: flex;
 
   span {
     position: absolute;
     top: 80px;
     left: 50px;
     font-size: 30px;
-    font-weight: 500;
+    font-weight: 500; 
     color: white;
     display: flex;
     align-items: center;
   }
+}
+.grid-cont {
+  // display: grid;
+  .grid{
+    margin: 30px 0px 0px 30px;
+    // top: -120px;
+   display: grid;
+   grid-template-columns: 0.3fr  0.3fr  0.3fr  0.3fr  0.3fr  ;
+   gap: 10px;
+    // grid-template-rows:  0.5fr  0.5fr  0.5fr  0.5fr  0.5fr;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
 }
 
 } 
