@@ -70,7 +70,7 @@ const getLikedMovies = async (req, res) => {
     return res.json({ msg: "Error fetching movies." });
   }
 };
-// ADD TO USER LIST 
+// ADD TO USER LIST  
 const addToLikedMovies =  async (req, res) => {
   try {
     const { email, data } = req.body;

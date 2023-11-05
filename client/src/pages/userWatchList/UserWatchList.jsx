@@ -9,6 +9,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getAllUsers } from '../../store'
 import './userWatchList.scss'
 import Navbar from '../../components/navbar/Navbar'
+import ListItem from '../../components/listItem/ListItem'
+import Show from '../../components/listItem/Show'
 
 const UserWatchList = () => {
 	const { currentUser } = useContext(AuthContext)
@@ -16,6 +18,7 @@ const UserWatchList = () => {
 	const users = useSelector((state) => state.netflix.users)
 	// will add these states to redux toolkit once functional
 	const [movieList, setMovieList] = useState([])
+	const [userId, setUserId] = useState('')
 
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
@@ -26,23 +29,46 @@ const UserWatchList = () => {
 
 	// console.log(users)
 
+	// useEffect(() => {
+	// 	const getUserMovieList = () => {
+	// 		const user = users.find((o) => o.email === email)
+	// 		setUserId(user._id)
+	// 	}
+
+	// 	getUserMovieList()
+	// }, [email, users])
+
 	useEffect(() => {
-		const getUserMovieList = () => {
-			const user = users.find((o) => o.email === email)
-			setMovieList(user.likedMovies)
+		const getUserInfo = async () => {
+			try {
+				let user = users.find((o) => o.email === email)
+				let id = user._id
+				await axios
+					.get(`http://localhost:3001/api/user/${id}`)
+					.then((response) => {
+						// console.log(response.data.user.likedMovies)
+            setMovieList(response.data.user.likedMovies)
+					})
+			} catch (error) {
+				console.log(error)
+			}
 		}
 
-		getUserMovieList()
+		getUserInfo()
 	}, [email, users])
 
-	console.log(movieList)
-
+	// console.log(movieList)
 
 	return (
 		<div className="container">
 			<Navbar />
 			<div className="title">
 				<span>My List</span>
+			</div>
+			<div className="grid">
+				{movieList.map((movie, i) => {
+					return <ListItem index={i} movie={movie} key={movie.id} />
+				})}
 			</div>
 		</div>
 	)
