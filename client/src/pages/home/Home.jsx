@@ -33,7 +33,6 @@ const Home = ({type}) => {
 		if (genresLoaded) {
 			dispatch(fetchMovies({ genres, type: 'movie' }))
 			dispatch(fetchShows({ genres, type: 'tv' }))
-			dispatch(getUsersLikedMovies({ email: currentUser.email }))
 		}
 	}, [genresLoaded, currentUser, genres, dispatch])
 

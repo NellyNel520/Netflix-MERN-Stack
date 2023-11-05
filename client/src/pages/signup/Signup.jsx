@@ -20,7 +20,7 @@ const Signup = () => {
 	const usernameRef = useRef()
 
 	const handleStart = () => {
-		setEmail(emailRef.current.value)
+		setEmail(emailRef.current.value) 
 	}
 
   const handleFinish = async (e) => {
@@ -33,6 +33,7 @@ const Signup = () => {
 				username,
 				email
 			});
+
 		} catch (error) {
       console.log(error)
 		}

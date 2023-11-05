@@ -3,12 +3,12 @@ import axios from 'axios'
 import { API_KEY, TMDB_BASE_URL } from '../utils/constants'
 
 const initialState = {
-	movies: [],
+	movies: [], 
 	shows: [],
 	genresLoaded: false,
-	genres: [],
-	seriesGenres: [],
-	usersList: []
+	genres: [], 
+	usersList: [],
+	users: [] 
 }
 
 export const getGenres = createAsyncThunk('netflix/genres', async () => {
@@ -18,12 +18,14 @@ export const getGenres = createAsyncThunk('netflix/genres', async () => {
 	return genres
 })
 
-export const getSeriesGenres = createAsyncThunk('netflix/series-genres', async () => {
+// get all users
+export const getAllUsers = createAsyncThunk('netflix/users', async () => {
 	const {
-		data: { seriesGenres },
-	} = await axios.get(`${TMDB_BASE_URL}/genre/tv/list?api_key=${API_KEY}`)
-	return seriesGenres
+		data: { users },
+	} = await axios.get('http://localhost:3001/api/user/all-users')
+	return users
 })
+
 
 const createArrayFromRawData = (array, moviesArray, genres) => {
 	array.forEach((movie) => {
@@ -156,12 +158,11 @@ const NetflixSlice = createSlice({
 			state.genres = action.payload
 			state.genresLoaded = true
 		})
-		builder.addCase(getSeriesGenres.fulfilled, (state, action) => {
-			state.seriesGenres = action.payload
-			state.genresLoaded = true
-		})
 		builder.addCase(fetchMovies.fulfilled, (state, action) => {
 			state.movies = action.payload
+		})
+		builder.addCase(getAllUsers.fulfilled, (state, action) => {
+			state.users = action.payload
 		})
 		builder.addCase(fetchShows.fulfilled, (state, action) => {
 			state.shows = action.payload
@@ -173,12 +174,10 @@ const NetflixSlice = createSlice({
 			state.shows = action.payload
 		})
 		builder.addCase(getUsersLikedMovies.fulfilled, (state, action) => {
-		  state.usersList = action.payload;
-			// may need seperate state
+		  state.movies = action.payload
 		});
 		builder.addCase(removeMovieFromLiked.fulfilled, (state, action) => {
-		  state.usersList = action.payload;
-				// may need seperate state
+		  state.movies = action.payload;
 		});
 	},
 })
