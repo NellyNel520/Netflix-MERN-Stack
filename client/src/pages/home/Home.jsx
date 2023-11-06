@@ -6,7 +6,7 @@ import HomeLists from '../../components/listContainer/HomeLists'
 
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchMovies, getGenres, fetchShows } from '../../store'
+import { fetchMovies, getGenres, fetchShows, getAllUsers } from '../../store'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 
@@ -23,6 +23,7 @@ const Home = ({type}) => {
 
 	useEffect(() => { 
 		dispatch(getGenres())    
+		// dispatch(getAllUsers())
 	}, [dispatch]) 
 
 	useEffect(() => {
