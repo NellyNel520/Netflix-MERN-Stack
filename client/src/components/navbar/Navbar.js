@@ -68,16 +68,16 @@ const Navbar = () => {
 						src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
 					/>
 					<Link to={'/'} className='link'>
-						<span>Homepage</span>
+						<span>Home</span>
 					</Link> 
 					<Link to={'/series'}className='link'>
-						<span>Series</span>
+						<span>TV Shows</span>
 					</Link>
 					<Link to={'/movies'} className='link'>
 						<span>Movies</span>
 					</Link>
 					<Link to={'/new'} className='link'>
-						<span>New and Popular</span>
+						<span>New & Popular</span>
 					</Link>
 					<Link to={'/myList'}className='link'>
 						<span>My List</span>

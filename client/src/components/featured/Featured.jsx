@@ -11,7 +11,7 @@ import axios from 'axios'
 import { API_KEY, TMDB_BASE_URL } from '../../utils/constants'
 import movieTrailer from 'movie-trailer'
 
-const Featured = ({ type, genres, itemList, i}) => {
+const Featured = ({ type, genres, itemList, i}) => { 
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const [itemLogo, setItemLogo] = useState({})
@@ -66,7 +66,7 @@ const Featured = ({ type, genres, itemList, i}) => {
 			})
 				.then((response) =>
 					// console.log(response, 'herrrreeeee')
-					setVideoId(response[1])
+					setVideoId(response[0])
 				)
 				.catch((err) => console.log(err))
 		}
