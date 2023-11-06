@@ -6,7 +6,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import { Link } from 'react-router-dom'
 import { signOut } from "firebase/auth";
 import { firebaseAuth } from "../../utils/firebase";
-
+ 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [showSearch, setShowSearch] = useState(false);
