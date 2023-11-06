@@ -164,6 +164,9 @@
         span {
           padding: 10px;
           cursor: pointer;
+          &:hover{
+            color: red;
+          }
         }
 
         &:hover {

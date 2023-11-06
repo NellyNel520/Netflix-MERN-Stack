@@ -9,6 +9,7 @@ import Movies from './pages/movies/Movies'
 import Series from './pages/shows/Series'
 import UserWatchList from './pages/userWatchList/UserWatchList'
 import NewAndPopular from './pages/newAndPopular/NewAndPopular'
+import Search from './pages/search/Search'
 import { useContext } from 'react'
 import { AuthContext } from './context/AuthContext'
 
@@ -35,13 +36,16 @@ const App = () => {
 					element={!currentUser ? <Login /> : <Navigate to={'/'} />}
 				/>
 
+				{/* element={currentUser ? < /> : <Navigate to={'/'} />} */}
+
 				{currentUser && (
 					<>
-						<Route exact path="/watch" element={<Watch />} />
-						<Route exact  path="/movies" element={<Movies currentUser={currentUser}/>} />
-						<Route exact path="/series" element={<Series />} currentUser={currentUser}/>
-						<Route exact path="/new" element={<NewAndPopular />} currentUser={currentUser}/>
-						<Route exact path="/myList" element={<UserWatchList />} currentUser={currentUser}/>
+						<Route exact path="/watch" element={currentUser ? <Watch /> : <Navigate to={'/'} />} />
+						<Route exact  path="/movies" element={currentUser ? <Movies /> : <Navigate to={'/'} />} />
+						<Route exact path="/series" element={currentUser ? <Series /> : <Navigate to={'/'} />}/>
+						<Route exact path="/new" element={currentUser ? <NewAndPopular /> : <Navigate to={'/'} />}/>
+						<Route exact path="/myList" element={currentUser ? <UserWatchList /> : <Navigate to={'/'} />}/>
+						<Route exact path="/search" element={currentUser ? <Search /> : <Navigate to={'/'} />}/>
 					</>
 				)}
 			</Routes>

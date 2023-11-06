@@ -14,6 +14,11 @@ const NewAndPopLists = ({movies, shows}) => {
 
   return (
     <div>
+		<ShowList
+				data={getShowsFromRange(11, 25)}
+				type="tv"
+				title="New on Netflix"
+			/>
       <TrendingList
 				data={getMoviesFromRange(0, 10)}
 				title="Top 10 Movies in the U.S. Today"

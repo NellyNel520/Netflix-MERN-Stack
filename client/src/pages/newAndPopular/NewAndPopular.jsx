@@ -4,7 +4,7 @@ import Navbar from '../../components/navbar/Navbar'
 import NewAndPopLists from '../../components/listContainer/NewAndPopLists'
 
  
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom' 
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchMovies, getGenres, fetchShows } from '../../store'
 
@@ -33,7 +33,7 @@ const NewAndPopular = () => {
     <div className='newPop'>
       <Navbar />
      
-
+		
       {/* <span>New and Popular</span> */}
       <div className="listContainer">
 				<NewAndPopLists movies={movies} shows={shows} />

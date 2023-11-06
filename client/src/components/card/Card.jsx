@@ -47,11 +47,7 @@ const Card = ({index, movie, genres, type,}) => {
 		}
 
 		const getMovieTrailer = async () => {
-			// await movieTrailer(null, {
-			// 	id: true,
-			// 	apiKey: '1b3318f6cac22f830b1d690422391493',
-			// 	tmdbId: movie.id,
-			// })
+			
 			await movieTrailer(movie.name, {
 				id: true,
 				multi: true,
@@ -69,10 +65,7 @@ const Card = ({index, movie, genres, type,}) => {
 
 	}, [movie, type,])
 
-	// console.log(genreNames)
-
-	// const releaseDate = new Date(movie.release_date)
-	// const releaseYear = releaseDate.getFullYear()
+	
 	const hours = Math.floor(runtime / 60)
 	const mins = runtime % 60
 
@@ -94,11 +87,7 @@ const Card = ({index, movie, genres, type,}) => {
 			console.log(error)
 		}
 	} 
-	// onClick={() =>
-	// 	dispatch(
-	// 		removeMovieFromLiked({ movieId: movieData.id, email })
-	// 	)
-	// }
+
 
 	const removeFromList = async () => {
 		try {
@@ -114,20 +103,17 @@ const Card = ({index, movie, genres, type,}) => {
   return (
     <div
     className="card"
-    // style={{ left: isHovered && index * 225 - 50 + index * 3.5 }}
     onMouseEnter={() => setIsHovered(true)}
     onMouseLeave={() => setIsHovered(false)}
   >
     {!isHovered ? (
       <img
-        // src={
-        // 	'https://vidasalseracom.files.wordpress.com/2021/08/vivo-2-vidasalsera.jpg?w=1200'
-        // }
+        
         src={`${BASE_URL}/${movie.image}`}
         alt="movie cover"
       />
     ) : null}
-    {/* <img src={`${BASE_URL}/${movie.backdrop_path}`} alt="movie cover" /> */}
+
 
     {isHovered && (
       <>
@@ -187,28 +173,21 @@ const Card = ({index, movie, genres, type,}) => {
             ) : (
               <span className="limit">NR</span>
             )}
-            {/* <span className="limit">NR</span> */}
-
-            {/* 	{showDetails.number_of_seasons > 1 ? `${showDetails.number_of_seasons} Seasons` : `${showDetails.number_of_episodes} Episodes`}  */}
-            {/* {type === 'tv' ? () :} */}
+           
             <span className="time">
               {runtime > 60 ? `${hours}h ${mins}m` : `${runtime}m`}
             </span>
-            {/* <span className="time">1h 20m</span> */}
+       
             <span className="limit">4K</span>
           </div>
 
-          {/* <div className="desc">
-          {movie.overview.length > 150 ?
-          `${movie.overview.substring(0, 150)}...` : movie.overview
-          }
-        </div> */}
+       
 
           <div className="genre">
             {movie.genres.map((name) => (
               <span className="test">{name}</span>
             ))}
-            {/* <span className="test">Comedy</span> */}
+         
           </div>
         </div>
       </>

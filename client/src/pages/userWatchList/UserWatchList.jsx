@@ -12,7 +12,7 @@ import Navbar from '../../components/navbar/Navbar'
 import Card from '../../components/card/Card'
 import Show from '../../components/listItem/Show'
 
-const UserWatchList = () => {
+const UserWatchList = () => { 
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
 	const users = useSelector((state) => state.netflix.users)
@@ -59,11 +59,13 @@ const UserWatchList = () => {
 					<span>My List</span>
 				</div>
 				<div className="grid-cont">
-					<div className="grid">
+
+				{movieList.length > 0 ? (<div className="grid">
 						{movieList.map((movie, i) => {
 							return <Card index={i} movie={movie} key={movie.id} />
 						})}
-					</div>
+					</div>) : (<div className='no-movies'><p>You haven't added any titles to your list yet.</p></div>)}
+					
 				</div>
 			</div>
 		</div> 

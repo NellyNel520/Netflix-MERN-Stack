@@ -62,11 +62,7 @@ export default React.memo(function Show({ index, movie, genres, type }) {
 		}
 
 		const getMovieTrailer = async () => {
-			// await movieTrailer(null, {
-			// 	id: true,
-			// 	apiKey: '1b3318f6cac22f830b1d690422391493',
-			// 	tmdbId: movie.id,
-			// })
+		
 			await movieTrailer(movie.name, {
 				id: true,
 				videoType: 'tv',
@@ -198,17 +194,13 @@ export default React.memo(function Show({ index, movie, genres, type }) {
 							<span className="limit">4K</span>
 						</div>
 
-						{/* <div className="desc">
-            {movie.overview.length > 150 ?
-            `${movie.overview.substring(0, 150)}...` : movie.overview
-            }
-          </div> */}
+						\
 
 						<div className="genre">
 							{movie.genres.map((name) => (
 								<span className="test">{name}</span>
 							))}
-							{/* <span className="test">Comedy</span> */}
+						
 						</div>
 					</div>
 				</>

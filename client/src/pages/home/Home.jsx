@@ -19,7 +19,7 @@ const Home = ({type}) => {
 
 
 	const navigate = useNavigate()
-	const dispatch = useDispatch()  
+	const dispatch = useDispatch()   
 
 	useEffect(() => { 
 		dispatch(getGenres())    

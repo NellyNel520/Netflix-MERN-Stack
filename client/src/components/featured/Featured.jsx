@@ -3,12 +3,10 @@ import './featured.scss'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useNavigate } from 'react-router-dom'
-import { fetchShowDataByGenre, fetchDataByGenre } from '../../store'
 import { useSelector, useDispatch } from 'react-redux'
 import SelectGenre from '../selectGenre/SelectGenre'
 import SelectGenreShows from '../selectGenre/SelectGenreShows'
 import axios from 'axios'
-import { API_KEY, TMDB_BASE_URL } from '../../utils/constants'
 import movieTrailer from 'movie-trailer'
 
 const Featured = ({ type, genres, itemList, i}) => { 
@@ -19,7 +17,7 @@ const Featured = ({ type, genres, itemList, i}) => {
 	const [videoId, setVideoId] = useState('')
 	
 
-	// const rand = Math.floor(Math.random() * 15)
+
 	const id = itemList[i]?.id
 	const title = itemList[i]?.name
 	const image = itemList[i]?.image
@@ -55,11 +53,7 @@ const Featured = ({ type, genres, itemList, i}) => {
 
 	useEffect(() => {
 		const getMovieTrailer = async () => {
-			// await movieTrailer(null, {
-			// 	id: true,
-			// 	apiKey: '1b3318f6cac22f830b1d690422391493',
-			// 	tmdbId: movie.id,
-			// })
+		
 			await movieTrailer(title, {
 				id: true,
 				multi: true,
@@ -75,7 +69,6 @@ const Featured = ({ type, genres, itemList, i}) => {
 
 	}, [])
 
-	// include_image_language=en
 
 	return (
 		<div className="featured">
@@ -97,14 +90,10 @@ const Featured = ({ type, genres, itemList, i}) => {
 					src={`${BASE_URL}/${itemLogo}`}
 					alt="movie logo"
 				/>
-				{/* <h1>{movieList[rand]?.title}</h1> */}
+			
 
 				<span className="desc">
-					{/* Vin Diesel's Dom Toretto is leading a quiet life off the grid with
-					Letty and his son, little Brian, but they know that danger always
-					lurks just over their peaceful horizon. This time, that threat will
-					force Dom to confront the sins of his past if he's going to save those
-					he loves most. */}
+				
 					{detailsLength > 150 ?
 							`${details.substring(0, 180)}...` : details
 							}

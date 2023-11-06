@@ -11,6 +11,7 @@ import { signOut } from "firebase/auth";
 import { firebaseAuth } from "../../utils/firebase";
 import axios from 'axios'
 import kidsLogo from '../../assets/netflixKids-logo.png'
+import { useNavigate } from 'react-router-dom'
  
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -30,6 +31,7 @@ const Navbar = () => {
 	
 
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		dispatch(getAllUsers())
@@ -56,7 +58,7 @@ const Navbar = () => {
 		getUserInfo()
 	}, [email, users])
 
-	console.log(username)
+	// console.log(username)
 
 
   return (
@@ -70,11 +72,11 @@ const Navbar = () => {
 					<Link to={'/'} className='link'>
 						<span>Home</span>
 					</Link> 
-					<Link to={'/series'}className='link'>
-						<span>TV Shows</span>
-					</Link>
 					<Link to={'/movies'} className='link'>
 						<span>Movies</span>
+					</Link>
+					<Link to={'/series'}className='link'>
+						<span>TV Shows</span>
 					</Link>
 					<Link to={'/new'} className='link'>
 						<span>New & Popular</span>
@@ -100,12 +102,14 @@ const Navbar = () => {
           <input
               type="text"
               placeholder="Search"
-              onMouseEnter={() => setInputHover(true)}
+              onMouseEnter={() => setInputHover(true) }
               onMouseLeave={() => setInputHover(false)}
               onBlur={() => {
                 setShowSearch(false);
                 setInputHover(false);
               }}
+							// onSubmit={() => navigate('/search')}
+							// onChange=(() => navigate('/search'))
             />
 
           </div>

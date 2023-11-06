@@ -52,11 +52,7 @@ function TrendingItem ({ index, item })  {
 		} 
 
 		const getMovieTrailer = async () => {
-			// await movieTrailer(null, {
-			// 	id: true,
-			// 	apiKey: '1b3318f6cac22f830b1d690422391493',
-			// 	tmdbId: movie.id,
-			// })
+		
 			await movieTrailer(item.name, {
 				id: true,
 				multi: true,
@@ -180,11 +176,7 @@ function TrendingItem ({ index, item })  {
 							<span className="limit">HD</span>
 						</div>
 
-						{/* <div className="desc"> 
-							{movie.overview.length > 150 ?
-							`${movie.overview.substring(0, 150)}...` : movie.overview
-							}
-						</div> */}
+						
 
 						<div className="genre">
 							{item.genres.map((name) => (
