@@ -11,6 +11,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [showSearch, setShowSearch] = useState(false);
   const [inputHover, setInputHover] = useState(false);
+	
 
 	window.onscroll = () => {
 		setIsScrolled(window.pageYOffset === 0 ? false : true)

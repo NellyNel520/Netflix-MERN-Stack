@@ -27,16 +27,7 @@ const UserWatchList = () => {
 		dispatch(getAllUsers())
 	}, [dispatch])
 
-	// console.log(users)
-
-	// useEffect(() => {
-	// 	const getUserMovieList = () => {
-	// 		const user = users.find((o) => o.email === email)
-	// 		setUserId(user._id)
-	// 	}
-
-	// 	getUserMovieList()
-	// }, [email, users])
+	
 
 	useEffect(() => {
 		const getUserInfo = async () => {

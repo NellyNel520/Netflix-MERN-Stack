@@ -45,9 +45,9 @@ const Login = () => {
 					<button className="loginButton" onClick={handleLogin}>Sign In</button>
 
 					<div className="save">
-						<div>
+						<div className="checkbox">
 							<input
-								className="checkbox"
+								
 								type="checkbox"
 								id="checkbox"
 								// checked={isChecked}
@@ -55,7 +55,7 @@ const Login = () => {
 							<label htmlFor="checkbox">Remember me ?</label>
 						</div>
 
-						<div>Need help?</div>
+						<div className='help'>Need help?</div>
 					</div>
 
 					<div className="signupLink">

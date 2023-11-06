@@ -30,6 +30,10 @@
         font-size: 16px;
         font-weight: 500;
         cursor: pointer;
+
+        &:hover {
+          color: black;
+        }
       }
     }
   }
@@ -57,7 +61,7 @@
     p {
       font-size: 20px;
     }
-
+ 
     .input {
       width: 50%;
       background-color: white;
@@ -83,6 +87,10 @@
         color: white;
         font-size: 22px;
         cursor: pointer;
+
+        &:hover {
+          color: black;
+        }
       }
 
     }

@@ -8,7 +8,7 @@ const initialState = {
 	genresLoaded: false,
 	genres: [], 
 	usersList: [],
-	users: [] 
+	users: [],
 }
 
 export const getGenres = createAsyncThunk('netflix/genres', async () => {
@@ -25,6 +25,9 @@ export const getAllUsers = createAsyncThunk('netflix/users', async () => {
 	} = await axios.get('http://localhost:3001/api/user/all-users')
 	return users
 })
+
+
+
 
 
 const createArrayFromRawData = (array, moviesArray, genres) => {
