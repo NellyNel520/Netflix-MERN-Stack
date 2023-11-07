@@ -1,15 +1,26 @@
-import React,  { useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import './signup.scss'
 import { useNavigate, Link } from 'react-router-dom'
-import { 
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-} from "firebase/auth";
+import {
+	createUserWithEmailAndPassword,
+	onAuthStateChanged,
+} from 'firebase/auth'
 import { firebaseAuth } from '../../utils/firebase'
-import { registerUser } from '../../context/apiCalls';
+import { registerUser } from '../../context/apiCalls'
+import * as Yup from 'yup'
+import { Formik } from 'formik'
+import Validator from 'email-validator'
 
-const Signup = () => {
-  const [email, setEmail] = useState('') 
+const signupFormSchema = Yup.object().shape({
+	email: Yup.string().email().required('An email'),
+	username: Yup.string().required().min(1, 'A username is required'),
+	password: Yup.string()
+		.required()
+		.min(6, 'Your password has to have at least 8 characters '),
+})
+
+const Signup2 = () => {
+	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [username, setUsername] = useState('')
 	let navigate = useNavigate()
@@ -19,68 +30,151 @@ const Signup = () => {
 	const usernameRef = useRef()
 
 	const handleStart = () => {
-		setEmail(emailRef.current.value) 
+		setEmail(emailRef.current.value)
 	}
 
-  const handleFinish = async (e) => {
-    e.preventDefault()
-		setUsername(usernameRef.current.value);
-		setPassword(passwordRef.current.value)
-    try {
-			await createUserWithEmailAndPassword(firebaseAuth, email, password);
+	const handleFinish = async (email, password, username) => {
+		
+		// setUsername(usernameRef.current.value)
+		// setPassword(passwordRef.current.value)
+		try {
+			await createUserWithEmailAndPassword(firebaseAuth, email, password)
 			await registerUser({
 				username,
-				email
-			});
-
+				email,
+			})
+			// console.log('🔥 Firebase Signup Successful ✅', email, password)
+			// console.log('🔥 MongoDB Signup Successful ✅', email, username)
 		} catch (error) {
-      console.log(error)
+			console.log(error)
+      alert('Opps ...', error.message)
 		}
 	}
 
- 
+	return (
+		<div className="signUp">
+			<div className="top">
+				<div className="wrapper">
+					<img
+						className="logo"
+						src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
+						alt="logo"
+					/>
+					<Link to="/login">
+						<button className="loginButton">Login</button>
+					</Link>
+				</div>
+			</div>
 
- 
-  return (
-    <div className="signUp">
-    <div className="top">
-      <div className="wrapper">
-        <img
-          className="logo"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
-          alt="logo"
-        />
-        <Link to='/login'>
-          <button className="loginButton">Login</button>
-        </Link>
-      </div>
-    </div>
+			<div className="container">
+				<h1>Unlimited movies, TV shows, and more.</h1>
+				<h2>Watch anywhere. Cancel anytime.</h2>
+				<p>
+					Ready to watch? Enter your email to create or restart your membership.
+				</p>
+				<Formik
+					initialValues={{ email: '', password: '', username: '' }}
+					onSubmit={(values) => {
+						handleFinish(values.email, values.password, values.username)
+						// console.log(values.email, values.password, values.username)
+					}}
+					validationSchema={signupFormSchema}
+					validateOnMount={true}
+				>
+					{({
+						handleChange,
+						handleBlur,
+						handleSubmit,
+						values,
+						errors,
+						isValid,
+					}) => (
+						<>
 
-    <div className="container">
-      <h1>Unlimited movies, TV shows, and more.</h1>
-      <h2>Watch anywhere. Cancel anytime.</h2>
-      <p>
-        Ready to watch? Enter your email to create or restart your membership.
-      </p>
-      {!email ? (
-        <div className="input">
-          <input type="email" placeholder="Email" ref={emailRef} />
-          <button className="signupButton" onClick={handleStart}>
-            Get Started
-          </button>
-        </div>
-      ) : (
-        <form className="input">
-        <input type="username" placeholder="username" ref={usernameRef} />
-          <input type="password" placeholder="Password" ref={passwordRef} />
-          <button className="signupButton" onClick={handleFinish}>
-            Start
-          </button>
-        </form>
-      )}
-    </div>
-  </div>
-  )
+            {!email ? (	
+              <div 
+              className='input'
+              // className={`input ${
+							// 			values.email.length < 1 || Validator.validate(values.email)
+							// 				? 'valid'
+							// 				: 'invalid'
+							// 		}`}
+                  >
+								<input
+									type="email"
+									placeholder="Email"
+									ref={emailRef}
+									onChange={handleChange('email')}
+									onBlur={handleBlur('email')}
+									value={values.email}
+                  className={`textInput ${
+										values.email.length < 1 || Validator.validate(values.email)
+											? 'valid'
+											: 'invalid'
+									}`}
+									
+
+								/>
+								<button className="signupButton" onClick={handleStart}>
+									Get Started
+								</button>
+							</div>) : (
+                <div className="input">
+                
+								<input
+									type="username"
+									placeholder="username"
+									ref={usernameRef}
+                  onChange={handleChange('username')}
+									onBlur={handleBlur('username')}
+									value={values.username}
+                  className={`textInput ${
+                    
+										 values.username.length > 1
+											? 'valid'
+											: 'invalid'
+									}`}
+								/>
+
+
+								<input
+									type="password"
+									placeholder="Password"
+									ref={passwordRef}
+                  onChange={handleChange('password')}
+									onBlur={handleBlur('password')}
+									value={values.password}
+                  className={`textInput ${
+                    
+										values.password.length > 5
+											? 'valid'
+											: 'invalid'
+									}`}
+								/>
+								<button 
+                // className="signupButton" 
+                className={`signupButton ${!isValid && ('invalid')}`}
+                onClick={handleSubmit} disabled={!isValid}
+                >
+									Start
+								</button>
+							</div>)}
+							{/* 	borderColor:
+										values.email.length < 1 || Validator.validate(values.email)
+											? '#ccc'
+											: 'red', */}
+
+						
+
+							
+
+
+						</>
+					)}
+				</Formik>
+			</div>
+		</div>
+	)
 }
 
-export default Signup
+export default Signup2
