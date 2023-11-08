@@ -8,7 +8,7 @@ import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
 import { removeMovieFromLiked } from '../../store'
-// Icons
+// Icons 
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import AddIcon from '@mui/icons-material/Add'
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
@@ -27,6 +27,8 @@ export default React.memo(function TrendingShow({ index, item }) {
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
 	const dispatch = useDispatch() 
+	const savedList = useSelector((state) => state.netflix.savedList)
+	const [isSaved, setIsSaved] = useState(false)
 
 	useEffect(() => {
 		const getSeriesDetails = () => {
@@ -75,10 +77,22 @@ export default React.memo(function TrendingShow({ index, item }) {
 				.catch((err) => console.log(err))
 		}
 
+		const isItemSaved = () => {
+			try {
+				let saved = savedList.find((o) => o.id === item.id)
+				if (saved) {
+					// setIsLiked(true)
+					setIsSaved(true)
+				}
+			} catch (error) {
+				console.log(error)
+			}
+		}
 		getSeriesDetails()
 		getContentRatings()
 		getMovieTrailer()
-	}, [item])
+		isItemSaved()
+	}, [item, savedList])
 
 	const UsRating = releaseDates.filter(function (item) {
 		return item.iso_3166_1 === 'US'
@@ -152,8 +166,12 @@ export default React.memo(function TrendingShow({ index, item }) {
 								<PlayArrowIcon className="icon" onClick={() => navigate('/watch', {
 										state: { videoId: videoId, movie: item }
 									})}/>
-							{isLiked ? (
-									<CheckIcon className="icon" title="Already saved" onClick={removeFromList}/>
+							{isSaved ? (
+									<CheckIcon
+										className="icon"
+										title="Already saved"
+										onClick={removeFromList}
+									/>
 								) : (
 									<AddIcon
 										className="icon"

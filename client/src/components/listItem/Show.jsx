@@ -9,7 +9,7 @@ import { AuthContext } from '../../context/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
 import { removeMovieFromLiked } from '../../store'
 // Icons
-import PlayArrowIcon from '@mui/icons-material/PlayArrow'
+import PlayArrowIcon from '@mui/icons-material/PlayArrow' 
 import AddIcon from '@mui/icons-material/Add'
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined'
@@ -27,6 +27,8 @@ export default React.memo(function Show({ index, movie, genres, type }) {
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
 	const dispatch = useDispatch() 
+	const savedList = useSelector((state) => state.netflix.savedList)
+	const [isSaved, setIsSaved] = useState(false)
 
 	useEffect(() => {
 		const getSeriesDetails = () => {
@@ -75,10 +77,23 @@ export default React.memo(function Show({ index, movie, genres, type }) {
 				.catch((err) => console.log(err))
 		}
 
+		const isItemSaved = () => {
+			try {
+				let saved = savedList.find((o) => o.id === movie.id)
+				if (saved) {
+					// setIsLiked(true)
+					setIsSaved(true)
+				}
+			} catch (error) {
+				console.log(error)
+			}
+		}
+
 		getSeriesDetails()
 		getContentRatings()
 		getMovieTrailer()
-	}, [movie])
+		isItemSaved()
+	}, [movie, savedList])
 
 	const UsRating = releaseDates.filter(function (item) {
 		return item.iso_3166_1 === 'US'
@@ -160,8 +175,12 @@ export default React.memo(function Show({ index, movie, genres, type }) {
 								/>
 
 								{/* on click add to my list mongo db */}
-								{isLiked ? (
-									<CheckIcon className="icon" title="Already saved" onClick={removeFromList}/>
+								{isSaved ? (
+									<CheckIcon
+										className="icon"
+										title="Already saved"
+										onClick={removeFromList}
+									/>
 								) : (
 									<AddIcon
 										className="icon"
@@ -169,6 +188,7 @@ export default React.memo(function Show({ index, movie, genres, type }) {
 										onClick={addToList}
 									/>
 								)}
+
 
 								<ThumbUpAltOutlinedIcon className="icon" />
 							</div>

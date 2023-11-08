@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './trendingItem.scss'
 import axios from 'axios'
 import movieTrailer from 'movie-trailer'
-import YouTube from 'react-youtube' 
+import YouTube from 'react-youtube'
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
@@ -16,11 +16,8 @@ import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
 import CheckIcon from '@mui/icons-material/Check'
 
-
-export default React.memo(
- 
-function TrendingItem ({ index, item })  {
-  const [isHovered, setIsHovered] = useState(false)
+export default React.memo(function TrendingItem({ index, item }) {
+	const [isHovered, setIsHovered] = useState(false)
 	const [isLiked, setIsLiked] = useState(false)
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
 	const [videoId, setVideoId] = useState('')
@@ -29,17 +26,16 @@ function TrendingItem ({ index, item })  {
 	const navigate = useNavigate()
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
-	const dispatch = useDispatch() 
- 
+	const dispatch = useDispatch()
+	const savedList = useSelector((state) => state.netflix.savedList)
+	const [isSaved, setIsSaved] = useState(false)
+
 	useEffect(() => {
-		
 		const getRunTime = () => {
 			axios
 				.get(
 					// `${TMDB_BASE_URL}/${type}/${movie.id}?api_key=${API_KEY}&language=en-US&append_to_response=release_dates`
 					`https://api.themoviedb.org/3/movie/${item.id}?api_key=1b3318f6cac22f830b1d690422391493&language=en-US&append_to_response=release_dates`
-					
-					
 				)
 				.then((response) => {
 					// console.log(response.data.release_dates.results)
@@ -49,27 +45,35 @@ function TrendingItem ({ index, item })  {
 				.catch((error) => {
 					console.log(error)
 				})
-		} 
+		}
 
 		const getMovieTrailer = async () => {
-		
 			await movieTrailer(item.name, {
 				id: true,
 				multi: true,
 			})
-				.then(
-					(response) => 
+				.then((response) =>
 					// console.log(response, 'herrrreeeee')
 					setVideoId(response[1])
 				)
 				.catch((err) => console.log(err))
 		}
-
-
+		const isItemSaved = () => {
+			try {
+				let saved = savedList.find((o) => o.id === item.id)
+				if (saved) {
+					// setIsLiked(true)
+					setIsSaved(true)
+				}
+			} catch (error) {
+				console.log(error)
+			}
+		}
 
 		getRunTime()
 		getMovieTrailer()
-	}, [item])
+		isItemSaved()
+	}, [item, savedList])
 
 	const hours = Math.floor(runtime / 60)
 	const mins = runtime % 60
@@ -95,15 +99,16 @@ function TrendingItem ({ index, item })  {
 
 	const removeFromList = async () => {
 		try {
-			await dispatch(removeMovieFromLiked({movieId: item.id, email}))
-			.then(() => setIsLiked(false))
-		} catch (error){
+			await dispatch(removeMovieFromLiked({ movieId: item.id, email })).then(
+				() => setIsLiked(false)
+			)
+		} catch (error) {
 			console.log(error)
 		}
 	}
 
-  return (
-    <div
+	return (
+		<div
 			className="trendingListItem"
 			style={{ left: isHovered && index * 385 - 50 + index * 2.5 }}
 			onMouseEnter={() => setIsHovered(true)}
@@ -121,33 +126,46 @@ function TrendingItem ({ index, item })  {
 			) : null}
 			{isHovered && (
 				<>
-				{videoId ? (<YouTube
-          videoId={videoId}
-          opts={{
-            // height: '200px',
-            // width: '438px',
-            height: '140px',
-            width: '325px',
-            playerVars: { autoplay: 1, mute: 1 },
-          }}
-        />) : (<img
-						// src={
-						// 	'https://vidasalseracom.files.wordpress.com/2021/08/vivo-2-vidasalsera.jpg?w=1200'
-						// }
-						src={`${BASE_URL}/${item.image}`} 
-						alt="movie cover"
-					/> )}
-					
-		
+					{videoId ? (
+						<YouTube
+							videoId={videoId}
+							opts={{
+								// height: '200px',
+								// width: '438px',
+								height: '140px',
+								width: '325px',
+								playerVars: { autoplay: 1, mute: 1 },
+							}}
+						/>
+					) : (
+						<img
+							// src={
+							// 	'https://vidasalseracom.files.wordpress.com/2021/08/vivo-2-vidasalsera.jpg?w=1200'
+							// }
+							src={`${BASE_URL}/${item.image}`}
+							alt="movie cover"
+						/>
+					)}
+
 					<div className="itemInfo">
 						<p>{item.name}</p>
 						<div className="icons">
 							<div>
-								<PlayArrowIcon className="icon" 	onClick={() => navigate('/watch', {
-										state: { videoId: videoId, movie: item }
-									})}/>
-								{isLiked ? (
-									<CheckIcon className="icon" title="Already saved" onClick={removeFromList}/>
+								<PlayArrowIcon
+									className="icon"
+									onClick={() =>
+										navigate('/watch', {
+											state: { videoId: videoId, movie: item },
+										})
+									}
+								/>
+
+								{isSaved ? (
+									<CheckIcon
+										className="icon"
+										title="Already saved"
+										onClick={removeFromList}
+									/>
 								) : (
 									<AddIcon
 										className="icon"
@@ -155,11 +173,11 @@ function TrendingItem ({ index, item })  {
 										onClick={addToList}
 									/>
 								)}
+
 								<ThumbUpAltOutlinedIcon className="icon" />
 							</div>
-						
-								<KeyboardArrowDownOutlinedIcon className="infoIcon" />
-						
+
+							<KeyboardArrowDownOutlinedIcon className="infoIcon" />
 						</div>
 
 						<div className="itemInfoTop">
@@ -168,15 +186,13 @@ function TrendingItem ({ index, item })  {
 							) : (
 								<span className="limit">NR</span>
 							)}
-              {/* <span className="limit">NR</span> */}
+							{/* <span className="limit">NR</span> */}
 
 							<span className="time">
 								{runtime > 60 ? `${hours}h ${mins}m` : `${runtime}m`}
 							</span>
 							<span className="limit">HD</span>
 						</div>
-
-						
 
 						<div className="genre">
 							{item.genres.map((name) => (
@@ -187,7 +203,5 @@ function TrendingItem ({ index, item })  {
 				</>
 			)}
 		</div>
-  )
-}
-
-)
+	)
+})

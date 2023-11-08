@@ -30,8 +30,6 @@ export default React.memo(function ListItem({ index, movie, genres, type }) {
 
 	const dispatch = useDispatch()
 	const savedList = useSelector((state) => state.netflix.savedList)
-
-	const [isLiked, setIsLiked] = useState(false)
 	const [isSaved, setIsSaved] = useState(false)
 	// console.log(savedList)
 
@@ -55,7 +53,7 @@ export default React.memo(function ListItem({ index, movie, genres, type }) {
 		const getMovieTrailer = async () => {
 			await movieTrailer(movie.name, {
 				id: true,
-				multi: true,
+				multi: true, 
 			})
 				.then((response) =>
 					// console.log(response, 'herrrreeeee')

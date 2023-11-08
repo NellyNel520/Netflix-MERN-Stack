@@ -23,7 +23,7 @@ const Home = ({type}) => {
 	const users = useSelector((state) => state.netflix.users)
 	// const savedList = useSelector((state) => state.netflix.savedList)
 	// const activeUser = useSelector((state) => state.netflix.activeUser)
-	
+
 	const navigate = useNavigate()
 	const dispatch = useDispatch()   
 
@@ -31,7 +31,7 @@ const Home = ({type}) => {
 		dispatch(getGenres())    
 		dispatch(getAllUsers())
 	
-	}, [dispatch]) 
+	}, [dispatch])  
 
 
 
