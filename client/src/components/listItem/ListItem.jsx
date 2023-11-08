@@ -76,9 +76,9 @@ export default React.memo(function ListItem({ index, movie, genres, type }) {
 		getRunTime()
 		getMovieTrailer()
 		isItemSaved()
-	}, [movie, type, savedList])
+	}, [movie, savedList, type])
 
-	console.log(isSaved)
+	// console.log(isSaved)
 
 	// console.log(genreNames)
 
@@ -100,7 +100,7 @@ export default React.memo(function ListItem({ index, movie, genres, type }) {
 					// data: {movie, type: 'movie'},
 				})
 				.then(() => setIsSaved(true))
-		} catch (error) {
+		} catch (error) { 
 			console.log(error)
 		}
 	}

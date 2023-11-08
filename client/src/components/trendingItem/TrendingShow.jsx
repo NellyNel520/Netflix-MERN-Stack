@@ -29,7 +29,7 @@ export default React.memo(function TrendingShow({ index, item }) {
 	const dispatch = useDispatch() 
 	const savedList = useSelector((state) => state.netflix.savedList)
 	const [isSaved, setIsSaved] = useState(false)
-
+ 
 	useEffect(() => {
 		const getSeriesDetails = () => {
 			axios

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import movieTrailer from 'movie-trailer'
-import YouTube from 'react-youtube'
+import YouTube from 'react-youtube' 
 import axios from 'axios'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
@@ -41,7 +41,7 @@ const UserWatchList = () => {
 						setMovieList(response.data.user.likedMovies)
 					})
 			} catch (error) {
-				console.log(error)
+				console.log(error) 
 			}
 		}
 

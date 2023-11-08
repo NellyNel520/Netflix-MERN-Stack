@@ -16,9 +16,9 @@ const HomeLists = ({ movies, shows, }) => {
 	// console.log(savedList)
 
 
-	return (
-		<div>
-			<List
+	return ( 
+		<div> 
+			<List 
 				data={getMoviesFromRange(11, 25)}
 				type="movie"
 				title="Continue Watching"
@@ -27,6 +27,7 @@ const HomeLists = ({ movies, shows, }) => {
 			<TrendingList
 				data={getMoviesFromRange(0, 10)}
 				title="Top 10 Movies in the U.S. Today"
+				type="movie"
 				
 			/>
 			<List

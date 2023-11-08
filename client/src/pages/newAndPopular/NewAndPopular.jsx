@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import './newAndPopular.scss'
 import Navbar from '../../components/navbar/Navbar'
 import NewAndPopLists from '../../components/listContainer/NewAndPopLists'
-
+ 
  
 import { useNavigate } from 'react-router-dom' 
 import { useSelector, useDispatch } from 'react-redux'

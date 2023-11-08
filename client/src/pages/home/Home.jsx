@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react'  
 import './home.scss'
+import React, { useEffect } from 'react'  
 import Navbar from '../../components/navbar/Navbar'
 import Featured from '../../components/featured/Featured'
 import HomeLists from '../../components/listContainer/HomeLists'
 
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchMovies, getGenres, fetchShows, getAllUsers, 
-	getSavedList 
+import { fetchMovies, getGenres, fetchShows, getAllUsers, getSavedList 
 } from '../../store'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
@@ -24,30 +23,24 @@ const Home = ({type}) => {
 	// const savedList = useSelector((state) => state.netflix.savedList)
 	// const activeUser = useSelector((state) => state.netflix.activeUser)
 
-	const navigate = useNavigate()
+	const navigate = useNavigate() 
 	const dispatch = useDispatch()   
 
 	useEffect(() => {  
 		dispatch(getGenres())    
 		dispatch(getAllUsers())
-	
-	}, [dispatch])  
 
-
-
-
+	}, [])  
 
 	useEffect(() => {
 		if (genresLoaded) {
 			dispatch(fetchMovies({ genres, type: 'movie' }))
 			dispatch(fetchShows({ genres, type: 'tv' }))
-				dispatch(getSavedList({users, email}))
+			dispatch(getSavedList({users, email}))
 			
 		}
-
-			// dispatch(getActiveUser())
 		
-	}, [genresLoaded, currentUser, genres, dispatch, users, email])
+	}, [genresLoaded, genres, dispatch, users, email])
 
 
 

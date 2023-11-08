@@ -26,7 +26,7 @@ export default React.memo(function Show({ index, movie, genres, type }) {
 	const navigate = useNavigate()
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
-	const dispatch = useDispatch() 
+	const dispatch = useDispatch()  
 	const savedList = useSelector((state) => state.netflix.savedList)
 	const [isSaved, setIsSaved] = useState(false)
 

@@ -29,7 +29,7 @@ export default React.memo(function TrendingItem({ index, item }) {
 	const dispatch = useDispatch()
 	const savedList = useSelector((state) => state.netflix.savedList)
 	const [isSaved, setIsSaved] = useState(false)
-
+ 
 	useEffect(() => {
 		const getRunTime = () => {
 			axios
@@ -73,7 +73,7 @@ export default React.memo(function TrendingItem({ index, item }) {
 		getRunTime()
 		getMovieTrailer()
 		isItemSaved()
-	}, [item, savedList])
+	}, [item, savedList ])
 
 	const hours = Math.floor(runtime / 60)
 	const mins = runtime % 60

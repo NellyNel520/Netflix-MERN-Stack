@@ -16,6 +16,7 @@ const initialState = {
 	users: [],
 	activeUser: null,
 	savedList: [],
+	// savedListLoaded: false,
 }
 
 export const getGenres = createAsyncThunk('netflix/genres', async () => {
@@ -90,7 +91,7 @@ export const fetchMovies = createAsyncThunk(
 			netflix: { genres },
 		} = thunkAPI.getState()
 		return getRawData(
-			`${TMDB_BASE_URL}/trending/${type}/day?api_key=${API_KEY}`,
+			`${TMDB_BASE_URL}/trending/${type}/week?api_key=${API_KEY}`,
 			genres,
 			true
 		)
@@ -132,55 +133,16 @@ export const getSavedList = createAsyncThunk('netflix/saved-list', async ({users
 })
 
 
-// 
-
-
-
-
-
-// *****STEP 2:
-// get current user email using firebase auth,
-// filter through users to find user with matching email,
-// sets the id for the current user
-// then make api call to mongodb to get active user
-const findUserByEmail = async (users) => {
-	const email = firebaseAuth().currentUser.email
-	let user = users.find((o) => o.email === email)
-	let id = user._id
-	// function send id as param 
-	// getUser(id)
-
-	// const {
-	// 	data: { activeUser },
-	// } = await axios.get(`${api}/${id}`)
-	// return activeUser
-}
-
-
-
-
-
-
-export const getUsersLikedMovies = createAsyncThunk(
-	'netflix/getLiked',
-	async (email) => {
-		const {
-			data: { movies },
-		} = await axios.get(`http://localhost:3001/api/user/liked/${email}`)
-		return movies
-	}
-)
-
 export const removeMovieFromLiked = createAsyncThunk(
 	'netflix/deleteLiked',
 	async ({ movieId, email }) => {
 		const {
-			data: { movies },
+			data: { savedList },
 		} = await axios.put('http://localhost:3001/api/user/remove', {
 			email,
 			movieId,
 		})
-		return movies
+		return savedList
 	}
 )
 
@@ -214,10 +176,7 @@ const NetflixSlice = createSlice({
 		builder.addCase(removeMovieFromLiked.fulfilled, (state, action) => {
 			state.savedList = action.payload
 		})
-		// doesnt work
-		builder.addCase(getUsersLikedMovies.fulfilled, (state, action) => {
-			state.movies = action.payload
-		})
+	
 	},
 })
 

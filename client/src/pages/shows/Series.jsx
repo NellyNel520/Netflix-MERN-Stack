@@ -7,7 +7,7 @@ import { fetchMovies, getGenres, fetchShows } from '../../store'
 import ShowScreenLists from '../../components/listContainer/ShowScreenLists'
 import Featured from '../../components/featured/Featured'
 
-
+ 
 const Series = ({currentUser}) => { 
 const shows = useSelector((state) => state.netflix.shows);
   const genres = useSelector((state) => state.netflix.genres); 
