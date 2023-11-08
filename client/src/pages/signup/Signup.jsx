@@ -1,19 +1,12 @@
-import React, { useState, useRef } from 'react'
 import './signup.scss'
+import React, { useState, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import {
-	createUserWithEmailAndPassword,
-	onAuthStateChanged,
-} from 'firebase/auth'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { firebaseAuth } from '../../utils/firebase'
 import { registerUser } from '../../context/apiCalls'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
 import Validator from 'email-validator'
-
-import Alert from '@mui/material/Alert'
-import IconButton from '@mui/material/IconButton'
-import CloseIcon from '@mui/icons-material/Close'
 
 const signupFormSchema = Yup.object().shape({
 	email: Yup.string().email().required('An email is required'),
@@ -25,43 +18,26 @@ const signupFormSchema = Yup.object().shape({
 
 const Signup2 = () => {
 	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [username, setUsername] = useState('')
 	let navigate = useNavigate()
-
-	// states for error alert messages
-	// const [emailError, setEmailError] = useState(false)
-	// const [passwordError, setPasswordError] = useState(false)
-	// const [usernameError, setUsernameError] = useState(false)
 
 	const emailRef = useRef()
 	const passwordRef = useRef()
 	const usernameRef = useRef()
 
 	const handleStart = () => {
-
-
 		setEmail(emailRef.current.value)
-	
 	}
 
 	const handleFinish = async (email, password, username) => {
-		// setUsername(usernameRef.current.value)
-		// setPassword(passwordRef.current.value)
 		try {
-			// if()
 			await createUserWithEmailAndPassword(firebaseAuth, email, password)
 			await registerUser({
 				username,
-				email, 
+				email,
 			})
-			// console.log('🔥 Firebase Signup Successful ✅', email, password)
-			// console.log('🔥 MongoDB Signup Successful ✅', email, username)
 		} catch (error) {
 			console.log(error)
 			// Alert.alert('Opps ...', error.message)
-			// set error state true
-			// set message state to error.message
 		}
 	}
 
@@ -107,14 +83,7 @@ const Signup2 = () => {
 							<div></div>
 							{!email ? (
 								<>
-									<div
-										className="input"
-										// className={`input ${
-										// 			values.email.length < 1 || Validator.validate(values.email)
-										// 				? 'valid'
-										// 				: 'invalid'
-										// 		}`}
-									>
+									<div className="input">
 										<input
 											type="email"
 											placeholder="Email"
@@ -131,34 +100,11 @@ const Signup2 = () => {
 										/>
 										<button
 											className="signupButton"
-											// onClick={Validator.validate(values.email) ? setIsError(false) : setIsError(true)}
-											// onClick={handleStart(Validator.validate(values.email))}
 											onClick={handleStart}
 											disabled={!Validator.validate(values.email)}
 										>
 											Get Started
 										</button>
-
-										{/* {emailError &&(
-											<Alert
-									severity="error"
-									action={
-										<IconButton
-											aria-label="close"
-											color="inherit"
-											size="small"
-											onClick={() => {
-												setEmailError(false)
-											}}
-										>
-											<CloseIcon fontSize="inherit" />
-										</IconButton>
-									}
-									sx={{ mb: 2 }}
-								>
-									Invalid email address and / or password!
-								</Alert>
-										)} */}
 									</div>
 								</>
 							) : (
@@ -188,7 +134,6 @@ const Signup2 = () => {
 											}`}
 										/>
 										<button
-											// className="signupButton"
 											className={`signupButton ${!isValid && 'invalid'}`}
 											onClick={handleSubmit}
 											disabled={!isValid}
@@ -196,36 +141,8 @@ const Signup2 = () => {
 											Start
 										</button>
 									</div>
-
-									{/* {isError && (
-										<Collapse in={isError}>
-											<Alert
-												severity="error"
-												action={
-													<IconButton
-														aria-label="close"
-														color="inherit"
-														size="small"
-														onClick={() => {
-															setIsError(false)
-														}}
-													>
-														<CloseIcon fontSize="inherit" />
-													</IconButton>
-												}
-												sx={{ mb: 2 }}
-											>
-												Invalid email address !
-											</Alert>
-										</Collapse>
-									)} */}
 								</>
 							)}
-
-							{/* 	borderColor:
-										values.email.length < 1 || Validator.validate(values.email)
-											? '#ccc'
-											: 'red', */}
 						</>
 					)}
 				</Formik>

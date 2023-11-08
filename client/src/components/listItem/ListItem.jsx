@@ -1,6 +1,6 @@
 import './listItem.scss'
 import React, { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import movieTrailer from 'movie-trailer'
 import YouTube from 'react-youtube'
 import axios from 'axios'
@@ -13,13 +13,10 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import AddIcon from '@mui/icons-material/Add'
 import CheckIcon from '@mui/icons-material/Check'
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
-import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
 
-export default React.memo(function ListItem({ index, movie, genres, type }) {
+export default React.memo(function ListItem({ index, movie, type }) {
 	const [isHovered, setIsHovered] = useState(false)
-	// *****need to change
-	// ******
 	const [runtime, setRuntime] = useState('')
 	const [releaseDates, setReleaseDates] = useState([])
 	const [videoId, setVideoId] = useState('')
@@ -37,7 +34,6 @@ export default React.memo(function ListItem({ index, movie, genres, type }) {
 		const getRunTime = () => {
 			axios
 				.get(
-					// `${TMDB_BASE_URL}/${type}/${movie.id}?api_key=${API_KEY}&language=en-US&append_to_response=release_dates`
 					`https://api.themoviedb.org/3/${type}/${movie.id}?api_key=1b3318f6cac22f830b1d690422391493&language=en-US&append_to_response=release_dates`
 				)
 				.then((response) => {
@@ -53,7 +49,7 @@ export default React.memo(function ListItem({ index, movie, genres, type }) {
 		const getMovieTrailer = async () => {
 			await movieTrailer(movie.name, {
 				id: true,
-				multi: true, 
+				multi: true,
 			})
 				.then((response) =>
 					// console.log(response, 'herrrreeeee')
@@ -97,10 +93,9 @@ export default React.memo(function ListItem({ index, movie, genres, type }) {
 				.post('http://localhost:3001/api/user/add', {
 					email,
 					data: movie,
-					// data: {movie, type: 'movie'},
 				})
 				.then(() => setIsSaved(true))
-		} catch (error) {  
+		} catch (error) {
 			console.log(error)
 		}
 	}
@@ -132,8 +127,6 @@ export default React.memo(function ListItem({ index, movie, genres, type }) {
 						<YouTube
 							videoId={videoId}
 							opts={{
-								// height: '200px',
-								// width: '438px',
 								height: '140px',
 								width: '325px',
 								playerVars: { autoplay: 1, mute: 1 },
@@ -165,7 +158,7 @@ export default React.memo(function ListItem({ index, movie, genres, type }) {
 								/>
 
 								{/* ******************* on click add to my list mongo db *****************/}
-								{/* check saved list for movie  */}
+
 								{isSaved ? (
 									<CheckIcon
 										className="icon"

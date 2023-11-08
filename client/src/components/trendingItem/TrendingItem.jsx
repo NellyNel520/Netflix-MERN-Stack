@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
 import './trendingItem.scss'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import movieTrailer from 'movie-trailer'
 import YouTube from 'react-youtube'
@@ -12,13 +12,11 @@ import { removeMovieFromLiked } from '../../store'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import AddIcon from '@mui/icons-material/Add'
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
-import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
 import CheckIcon from '@mui/icons-material/Check'
 
 export default React.memo(function TrendingItem({ index, item }) {
 	const [isHovered, setIsHovered] = useState(false)
-	const [isLiked, setIsLiked] = useState(false)
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
 	const [videoId, setVideoId] = useState('')
 	const [releaseDates, setReleaseDates] = useState([])
@@ -29,12 +27,11 @@ export default React.memo(function TrendingItem({ index, item }) {
 	const dispatch = useDispatch()
 	const savedList = useSelector((state) => state.netflix.savedList)
 	const [isSaved, setIsSaved] = useState(false)
- 
+
 	useEffect(() => {
 		const getRunTime = () => {
 			axios
 				.get(
-					// `${TMDB_BASE_URL}/${type}/${movie.id}?api_key=${API_KEY}&language=en-US&append_to_response=release_dates`
 					`https://api.themoviedb.org/3/movie/${item.id}?api_key=1b3318f6cac22f830b1d690422391493&language=en-US&append_to_response=release_dates`
 				)
 				.then((response) => {
@@ -62,7 +59,6 @@ export default React.memo(function TrendingItem({ index, item }) {
 			try {
 				let saved = savedList.find((o) => o.id === item.id)
 				if (saved) {
-					// setIsLiked(true)
 					setIsSaved(true)
 				}
 			} catch (error) {
@@ -73,7 +69,7 @@ export default React.memo(function TrendingItem({ index, item }) {
 		getRunTime()
 		getMovieTrailer()
 		isItemSaved()
-	}, [item, savedList ])
+	}, [item, savedList])
 
 	const hours = Math.floor(runtime / 60)
 	const mins = runtime % 60
@@ -130,21 +126,13 @@ export default React.memo(function TrendingItem({ index, item }) {
 						<YouTube
 							videoId={videoId}
 							opts={{
-								// height: '200px',
-								// width: '438px',
 								height: '140px',
 								width: '325px',
 								playerVars: { autoplay: 1, mute: 1 },
 							}}
 						/>
 					) : (
-						<img
-							// src={
-							// 	'https://vidasalseracom.files.wordpress.com/2021/08/vivo-2-vidasalsera.jpg?w=1200'
-							// }
-							src={`${BASE_URL}/${item.image}`}
-							alt="movie cover"
-						/>
+						<img src={`${BASE_URL}/${item.image}`} alt="movie cover" />
 					)}
 
 					<div className="itemInfo">
@@ -186,7 +174,6 @@ export default React.memo(function TrendingItem({ index, item }) {
 							) : (
 								<span className="limit">NR</span>
 							)}
-							{/* <span className="limit">NR</span> */}
 
 							<span className="time">
 								{runtime > 60 ? `${hours}h ${mins}m` : `${runtime}m`}

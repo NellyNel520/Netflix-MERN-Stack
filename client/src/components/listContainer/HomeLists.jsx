@@ -3,65 +3,53 @@ import List from '../list/List'
 import ShowList from '../list/ShowList'
 import TrendingList from '../trendingList/TrendingList'
 import TrendingShowList from '../trendingList/TrendingShowList'
-import { useSelector, useDispatch } from 'react-redux'
- 
-const HomeLists = ({ movies, shows, }) => {
+
+const HomeLists = ({ movies, shows }) => {
 	const getMoviesFromRange = (from, to) => {
 		return movies.slice(from, to)
 	}
 	const getShowsFromRange = (from, to) => {
 		return shows.slice(from, to)
 	}
-	// const savedList = useSelector((state) => state.netflix.savedList)
-	// console.log(savedList)
 
-
-	return ( 
-		<div> 
-			<List 
+	return (
+		<div>
+			<List
 				data={getMoviesFromRange(11, 25)}
 				type="movie"
 				title="Continue Watching"
-				
 			/>
 			<TrendingList
 				data={getMoviesFromRange(0, 10)}
 				title="Top 10 Movies in the U.S. Today"
 				type="movie"
-				
 			/>
 			<List
 				data={getMoviesFromRange(26, 40)}
 				title="New Releases"
 				type="movie"
-			
 			/>
 			<List
 				data={getMoviesFromRange(41, 55)}
 				title="Action & Adventure"
 				type="movie"
-			
 			/>
 			<TrendingShowList
 				data={getShowsFromRange(0, 10)}
 				title="Top 10 Shows in the U.S. Today"
 				type="tv"
-				
 			/>
 			<List data={getMoviesFromRange(41, 55)} title="Must Watch" />
 			<ShowList
 				data={getShowsFromRange(11, 25)}
 				type="tv"
 				title="Binge Worthy"
-				
 			/>
 			<ShowList
 				data={getShowsFromRange(26, 40)}
 				type="tv"
 				title="Popular on Netflix"
-			
 			/>
-			
 		</div>
 	)
 }

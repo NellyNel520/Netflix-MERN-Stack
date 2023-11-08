@@ -1,6 +1,6 @@
+import './app.scss'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './app.scss'
 import App from './App'
 import { AuthContextProvider } from './context/AuthContext'
 import { Provider } from 'react-redux'

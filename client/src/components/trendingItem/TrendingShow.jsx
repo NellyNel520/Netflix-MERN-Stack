@@ -12,13 +12,11 @@ import { removeMovieFromLiked } from '../../store'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import AddIcon from '@mui/icons-material/Add'
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
-import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
 import CheckIcon from '@mui/icons-material/Check'
 
 export default React.memo(function TrendingShow({ index, item }) {
 	const [isHovered, setIsHovered] = useState(false)
-	const [isLiked, setIsLiked] = useState(false)
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
 	const [showDetails, setShowDetails] = useState({})
 	const [releaseDates, setReleaseDates] = useState([])
@@ -40,8 +38,6 @@ export default React.memo(function TrendingShow({ index, item }) {
 				.then((response) => {
 					// console.log(response.data)
 					setShowDetails(response.data)
-					// setRuntime(response.data.runtime)
-					// setReleaseDates(response.data.release_dates.results)
 				})
 				.catch((error) => {
 					console.log(error)
@@ -144,8 +140,6 @@ export default React.memo(function TrendingShow({ index, item }) {
 						<YouTube
 							videoId={videoId}
 							opts={{
-								// height: '200px',
-								// width: '438px',
 								height: '140px',
 								width: '325px',
 								playerVars: { autoplay: 1, mute: 1 },
@@ -191,7 +185,7 @@ export default React.memo(function TrendingShow({ index, item }) {
 							) : (
 								<span className="limit">NR</span>
 							)}
-							{/* <span className="limit">NR</span> */}
+							
 							<span>
 								{/* if 1 season episodes.length and if more that 1 season seasons.length */}
 								{showDetails.number_of_seasons > 1

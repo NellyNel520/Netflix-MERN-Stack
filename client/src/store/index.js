@@ -6,7 +6,6 @@ import {
 } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { API_KEY, TMDB_BASE_URL } from '../utils/constants'
-import { firebaseAuth } from '../utils/firebase'
 
 const initialState = {
 	movies: [],
@@ -14,9 +13,8 @@ const initialState = {
 	genresLoaded: false,
 	genres: [],
 	users: [],
-	activeUser: null,
+	activeUser: {},
 	savedList: [],
-	// savedListLoaded: false,
 }
 
 export const getGenres = createAsyncThunk('netflix/genres', async () => {
@@ -67,7 +65,7 @@ export const fetchDataByGenre = createAsyncThunk(
 		return getRawData(
 			`${TMDB_BASE_URL}/discover/${type}?api_key=${API_KEY}&with_genres=${genre}`,
 			genres
-		) 
+		)
 	}
 )
 
@@ -85,7 +83,7 @@ export const fetchShowDataByGenre = createAsyncThunk(
 )
 
 export const fetchMovies = createAsyncThunk(
-	'netflix/trending',
+	'netflix/trendingMovies',
 	async ({ type }, thunkAPI) => {
 		const {
 			netflix: { genres },
@@ -111,27 +109,25 @@ export const fetchShows = createAsyncThunk(
 		)
 	}
 )
-// get all users **works**
-export const getAllUsers = createAsyncThunk('netflix/users', async () => {
 
-	const { 
+export const getAllUsers = createAsyncThunk('netflix/users', async () => {
+	const {
 		data: { users },
 	} = await axios.get('http://localhost:3001/api/user/all-users')
 	return users
 })
 
-
-// ***************Get active user by email ***********************
-
-export const getSavedList = createAsyncThunk('netflix/saved-list', async ({users, email}) => {
-	let user = users.find((o) => o.email === email)
-	let id = user._id
-	const { 
-		data: { savedList },
-	} = await axios.get(`http://localhost:3001/api/user/savedList/${id}`)
-	return savedList
-})
-
+export const getSavedList = createAsyncThunk(
+	'netflix/saved-list',
+	async ({ users, email }) => {
+		let user = users.find((o) => o.email === email)
+		let id = user._id
+		const {
+			data: { savedList },
+		} = await axios.get(`http://localhost:3001/api/user/savedList/${id}`)
+		return savedList
+	}
+)
 
 export const removeMovieFromLiked = createAsyncThunk(
 	'netflix/deleteLiked',
@@ -176,7 +172,6 @@ const NetflixSlice = createSlice({
 		builder.addCase(removeMovieFromLiked.fulfilled, (state, action) => {
 			state.savedList = action.payload
 		})
-	
 	},
 })
 

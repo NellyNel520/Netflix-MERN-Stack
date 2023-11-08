@@ -6,6 +6,7 @@ const Search = () => {
   return (
     <div className='search-screen'>
       <Navbar />
+      {/* *************ICE BOX feature ****************** */}
     </div>
   )
 }

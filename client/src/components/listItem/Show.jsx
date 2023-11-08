@@ -18,7 +18,6 @@ import CheckIcon from '@mui/icons-material/Check'
 
 export default React.memo(function Show({ index, movie, genres, type }) {
 	const [isHovered, setIsHovered] = useState(false)
-	const [isLiked, setIsLiked] = useState(false)
 	const [showDetails, setShowDetails] = useState({})
 	const [releaseDates, setReleaseDates] = useState([])
 	const [videoId, setVideoId] = useState('')

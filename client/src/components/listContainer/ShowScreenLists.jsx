@@ -2,13 +2,13 @@ import React from 'react'
 import ShowList from '../list/ShowList'
 import TrendingShowList from '../trendingList/TrendingShowList'
 
-const ShowScreenLists = ({shows}) => {
-  const getShowsFromRange = (from, to) => {
+const ShowScreenLists = ({ shows }) => {
+	const getShowsFromRange = (from, to) => {
 		return shows.slice(from, to)
 	}
-  return (
-    <div>
-      	<TrendingShowList
+	return (
+		<div>
+			<TrendingShowList
 				data={getShowsFromRange(0, 10)}
 				title="Top 10 Shows in the U.S. Today"
 				type="tv"
@@ -24,8 +24,8 @@ const ShowScreenLists = ({shows}) => {
 				type="tv"
 				title="Popular on Netflix"
 			/>
-    </div>
-  )
+		</div>
+	)
 }
 
 export default ShowScreenLists

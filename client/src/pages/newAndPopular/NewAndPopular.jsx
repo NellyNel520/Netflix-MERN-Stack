@@ -1,15 +1,13 @@
-import React, {useEffect} from 'react'
 import './newAndPopular.scss'
+import React, { useEffect } from 'react'
 import Navbar from '../../components/navbar/Navbar'
 import NewAndPopLists from '../../components/listContainer/NewAndPopLists'
- 
- 
-import { useNavigate } from 'react-router-dom' 
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchMovies, getGenres, fetchShows } from '../../store'
 
 const NewAndPopular = () => {
-  const movies = useSelector((state) => state.netflix.movies)
+	const movies = useSelector((state) => state.netflix.movies)
 	const shows = useSelector((state) => state.netflix.shows)
 	const genres = useSelector((state) => state.netflix.genres)
 	const genresLoaded = useSelector((state) => state.netflix.genresLoaded)
@@ -18,7 +16,7 @@ const NewAndPopular = () => {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		dispatch(getGenres())  
+		dispatch(getGenres())
 	}, [])
 
 	useEffect(() => {
@@ -28,19 +26,15 @@ const NewAndPopular = () => {
 		}
 	}, [genresLoaded])
 
+	return (
+		<div className="newPop">
+			<Navbar />
 
-  return (
-    <div className='newPop'>
-      <Navbar />
-     
-		
-      {/* <span>New and Popular</span> */}
-      <div className="listContainer">
+			<div className="listContainer">
 				<NewAndPopLists movies={movies} shows={shows} />
 			</div>
-      
-    </div>
-  )
+		</div>
+	)
 }
 
-export default NewAndPopular  
+export default NewAndPopular

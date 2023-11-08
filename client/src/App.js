@@ -1,10 +1,9 @@
-import React from 'react'
 import './app.scss'
+import React from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/home/Home'
 import Login from './pages/login/Login'
 import Signup from './pages/signup/Signup'
-// import Signup2 from './pages/signup2/Signup2'
 import Watch from './pages/watch/Watch'
 import Movies from './pages/movies/Movies'
 import Series from './pages/shows/Series'
@@ -15,7 +14,6 @@ import { useContext } from 'react'
 import { AuthContext } from './context/AuthContext'
 
 const App = () => { 
-	// const currentUser = false
 	const { currentUser } = useContext(AuthContext)
 
 	return (
@@ -37,7 +35,6 @@ const App = () => {
 					element={!currentUser ? <Login /> : <Navigate to={'/'} />}
 				/>
 
-				{/* element={currentUser ? < /> : <Navigate to={'/'} />} */}
 
 				{currentUser && (
 					<>

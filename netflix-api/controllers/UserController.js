@@ -44,13 +44,13 @@ const getUserByUserId = async (req, res) => {
 	}
 }; 
 
-// works
+
 const getSavedList = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
     if (user) { 
-      // return res.json({ msg: "success", movies: user.likedMovies });
+   
       return res.status(200).json({ savedList: user.likedMovies  });
     } 
     else return res.json({ msg: "User with given Id not found." });

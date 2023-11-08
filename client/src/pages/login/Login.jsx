@@ -1,20 +1,16 @@
 import './login.scss'
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { firebaseAuth } from '../../utils/firebase'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
 import Validator from 'email-validator'
-// error alert message
-// import Alert from '@mui/material/Alert'
-// or use custom alert component errorAlert
 
 // alert imports
 import Alert from '@mui/material/Alert'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
-import Collapse from '@mui/material/Collapse'
 
 const loginFormSchema = Yup.object().shape({
 	email: Yup.string()
@@ -26,13 +22,7 @@ const loginFormSchema = Yup.object().shape({
 })
 
 const Login = () => {
-	// const [email, setEmail] = useState('')
-	// const [password, setPassword] = useState('')
 	const [isError, setIsError] = useState(false)
-	// const [errorMessage, setErrorMessage] = useState()
-
-	// const emailRef = useRef()
-	// const passwordRef = useRef()
 
 	const handleLogin = async (email, password) => {
 		try {
@@ -60,7 +50,7 @@ const Login = () => {
 					initialValues={{ email: '', password: '' }}
 					onSubmit={(values) => {
 						handleLogin(values.email, values.password)
-						// console.log(values.email, values.password, values.username)
+						// console.log(values.email, values.password)
 					}}
 					validationSchema={loginFormSchema}
 					validateOnMount={true}
@@ -111,11 +101,7 @@ const Login = () => {
 
 								<div className="save">
 									<div className="checkbox">
-										<input
-											type="checkbox"
-											id="checkbox"
-											// checked={isChecked}
-										/>
+										<input type="checkbox" id="checkbox" />
 										<label htmlFor="checkbox">Remember me ?</label>
 									</div>
 

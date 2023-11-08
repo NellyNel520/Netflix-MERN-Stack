@@ -1,6 +1,6 @@
 import './card.scss'
 import React, { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import movieTrailer from 'movie-trailer'
 import YouTube from 'react-youtube'
 import axios from 'axios'
@@ -13,11 +13,10 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import AddIcon from '@mui/icons-material/Add'
 import CheckIcon from '@mui/icons-material/Check'
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
-import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
 
-const Card = ({index, movie, genres, type,}) => {
-  const [isHovered, setIsHovered] = useState(false)
+const Card = ({ index, movie, genres, type }) => {
+	const [isHovered, setIsHovered] = useState(false)
 	const [runtime, setRuntime] = useState('')
 	const [releaseDates, setReleaseDates] = useState([])
 	const [videoId, setVideoId] = useState('')
@@ -25,23 +24,17 @@ const Card = ({index, movie, genres, type,}) => {
 	const navigate = useNavigate()
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
-  const dispatch = useDispatch() 
-
-	const [isLiked, setIsLiked] = useState(false)
-  const savedList = useSelector((state) => state.netflix.savedList)
+	const dispatch = useDispatch()
+	const savedList = useSelector((state) => state.netflix.savedList)
 	const [isSaved, setIsSaved] = useState(false)
 
-
-  useEffect(() => {
+	useEffect(() => {
 		const getRunTime = () => {
-			
 			axios
 				.get(
-					// `${TMDB_BASE_URL}/${type}/${movie.id}?api_key=${API_KEY}&language=en-US&append_to_response=release_dates`
 					`https://api.themoviedb.org/3/movie/${movie.id}?api_key=1b3318f6cac22f830b1d690422391493&language=en-US&append_to_response=release_dates`
 				)
 				.then((response) => {
-					// console.log(response.data.release_dates.results)
 					setRuntime(response.data.runtime)
 					setReleaseDates(response.data.release_dates.results)
 				})
@@ -51,19 +44,15 @@ const Card = ({index, movie, genres, type,}) => {
 		}
 
 		const getMovieTrailer = async () => {
-			
 			await movieTrailer(movie.name, {
 				id: true,
 				multi: true,
 			})
-				.then((response) =>
-					// console.log(response, 'herrrreeeee')
-					setVideoId(response[1])
-				)
+				.then((response) => setVideoId(response[1]))
 				.catch((err) => console.log(err))
 		}
 
-    const isItemSaved = () => {
+		const isItemSaved = () => {
 			try {
 				let saved = savedList.find((o) => o.id === movie.id)
 				if (saved) {
@@ -75,13 +64,11 @@ const Card = ({index, movie, genres, type,}) => {
 			}
 		}
 
-
 		getRunTime()
 		getMovieTrailer()
-    isItemSaved()
+		isItemSaved()
 	}, [movie, type, savedList])
 
-	
 	const hours = Math.floor(runtime / 60)
 	const mins = runtime % 60
 
@@ -102,114 +89,101 @@ const Card = ({index, movie, genres, type,}) => {
 		} catch (error) {
 			console.log(error)
 		}
-	} 
-
+	}
 
 	const removeFromList = async () => {
 		try {
-			await dispatch(removeMovieFromLiked({movieId: movie.id, email}))
-			.then(() => setIsSaved(false))
-		} catch (error){
+			await dispatch(removeMovieFromLiked({ movieId: movie.id, email })).then(
+				() => setIsSaved(false)
+			)
+		} catch (error) {
 			console.log(error)
 		}
 	}
 
+	return (
+		<div
+			className="card"
+			onMouseEnter={() => setIsHovered(true)}
+			onMouseLeave={() => setIsHovered(false)}
+		>
+			{!isHovered ? (
+				<img src={`${BASE_URL}/${movie.image}`} alt="movie cover" />
+			) : null}
 
+			{isHovered && (
+				<>
+					{videoId ? (
+						<YouTube
+							videoId={videoId}
+							opts={{
+								height: '140px',
+								width: '325px',
+								playerVars: { autoplay: 1, mute: 1 },
+							}}
+						/>
+					) : (
+						<img src={`${BASE_URL}/${movie.image}`} alt="movie cover" />
+					)}
+					<div className="itemInfo">
+						<p>{movie.name}</p>
 
-  return (
-    <div
-    className="card"
-    onMouseEnter={() => setIsHovered(true)}
-    onMouseLeave={() => setIsHovered(false)}
-  >
-    {!isHovered ? (
-      <img
-        
-        src={`${BASE_URL}/${movie.image}`}
-        alt="movie cover"
-      />
-    ) : null}
+						<div className="icons">
+							<div>
+								<PlayArrowIcon
+									className="icon"
+									onClick={() =>
+										navigate('/watch', {
+											state: { videoId: videoId, movie: movie },
+										})
+									}
+								/>
 
+								{/* ******************* on click add to my list mongo db *****************/}
 
-    {isHovered && (
-      <>
-        {videoId ? (
-          <YouTube
-            videoId={videoId}
-            opts={{
-              // height: '200px',
-              // width: '438px',
-              height: '140px',
-              width: '325px',
-              playerVars: { autoplay: 1, mute: 1 },
-            }}
-          />
-        ) : (
-          <img src={`${BASE_URL}/${movie.image}`} alt="movie cover" />
-        )}
-        <div className="itemInfo">
-          <p>{movie.name}</p>
-          {/* <p>{movie.image}</p> */}
-          <div className="icons">
-            <div>
-              <PlayArrowIcon
-                className="icon"
-                onClick={() =>
-                  navigate('/watch', {
-                    state: { videoId: videoId, movie: movie },
-                  })
-                }
-              />
+								{isSaved ? (
+									<CheckIcon
+										className="icon"
+										title="Already saved"
+										onClick={removeFromList}
+									/>
+								) : (
+									<AddIcon
+										className="icon"
+										title="Add to my list"
+										onClick={addToList}
+									/>
+								)}
 
-              {/* ******************* on click add to my list mongo db *****************/}
+								<ThumbUpAltOutlinedIcon className="icon" />
+							</div>
+							<KeyboardArrowDownOutlinedIcon className="infoIcon" />
+						</div>
 
-              {isSaved ? (
-                <CheckIcon className="icon" title="Already saved" onClick={removeFromList}/>
-              ) : (
-                <AddIcon
-                  className="icon"
-                  title="Add to my list"
-                  onClick={addToList}
-                />
-              )}
-              {/* <AddIcon
-                  className="icon"
-                  title="Add to my list"
-                  onClick={addToList}
-                /> */}
+						<div className="itemInfoTop">
+							{rating ? (
+								<span className="limit">{rating}</span>
+							) : (
+								<span className="limit">NR</span>
+							)}
 
-              <ThumbUpAltOutlinedIcon className="icon" />
-            </div>
-            <KeyboardArrowDownOutlinedIcon className="infoIcon" />
-          </div>
+							<span className="time">
+								{runtime > 60 ? `${hours}h ${mins}m` : `${runtime}m`}
+							</span>
 
-          <div className="itemInfoTop">
-            {rating ? (
-              <span className="limit">{rating}</span>
-            ) : (
-              <span className="limit">NR</span>
-            )}
-           
-            <span className="time">
-              {runtime > 60 ? `${hours}h ${mins}m` : `${runtime}m`}
-            </span>
-       
-            <span className="limit">4K</span>
-          </div>
+							<span className="limit">4K</span>
+						</div>
 
-       
-
-          <div className="genre">
-            {movie.genres.map((name) => (
-              <span className="test">{name}</span>
-            ))}
-         
-          </div>
-        </div>
-      </>
-    )}
-  </div>
-  )
+						<div className="genre">
+							{movie.genres.map((name) => (
+								<span className="test">{name}</span>
+							))}
+						</div>
+					</div>
+				</>
+			)}
+		</div>
+	)
 }
 
 export default Card

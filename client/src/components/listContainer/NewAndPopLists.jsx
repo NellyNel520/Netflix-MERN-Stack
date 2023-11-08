@@ -4,33 +4,33 @@ import ShowList from '../list/ShowList'
 import TrendingList from '../trendingList/TrendingList'
 import TrendingShowList from '../trendingList/TrendingShowList'
 
-const NewAndPopLists = ({movies, shows}) => {
-  const getMoviesFromRange = (from, to) => {
+const NewAndPopLists = ({ movies, shows }) => {
+	const getMoviesFromRange = (from, to) => {
 		return movies.slice(from, to)
 	}
 	const getShowsFromRange = (from, to) => {
 		return shows.slice(from, to)
 	}
 
-  return (
-    <div>
-		<ShowList
+	return (
+		<div>
+			<ShowList
 				data={getShowsFromRange(11, 25)}
 				type="tv"
 				title="New on Netflix"
 			/>
-      <TrendingList
+			<TrendingList
 				data={getMoviesFromRange(0, 10)}
 				title="Top 10 Movies in the U.S. Today"
 			/>
 
-<TrendingShowList
+			<TrendingShowList
 				data={getShowsFromRange(0, 10)}
 				title="Top 10 Shows in the U.S. Today"
 				type="tv"
 			/>
 
-<List
+			<List
 				data={getMoviesFromRange(11, 25)}
 				type="movie"
 				title="Trending Now"
@@ -41,7 +41,7 @@ const NewAndPopLists = ({movies, shows}) => {
 				type="movie"
 			/>
 
-<ShowList
+			<ShowList
 				data={getShowsFromRange(11, 25)}
 				type="tv"
 				title="Binge Worthy"
@@ -51,8 +51,8 @@ const NewAndPopLists = ({movies, shows}) => {
 				type="tv"
 				title="Popular on Netflix"
 			/>
-    </div>
-  )
+		</div>
+	)
 }
 
 export default NewAndPopLists
