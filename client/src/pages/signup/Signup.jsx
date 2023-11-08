@@ -12,6 +12,8 @@ import { Formik } from 'formik'
 import Validator from 'email-validator'
 
 import Alert from '@mui/material/Alert'
+import IconButton from '@mui/material/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
 
 const signupFormSchema = Yup.object().shape({
 	email: Yup.string().email().required('An email is required'),
@@ -28,21 +30,19 @@ const Signup2 = () => {
 	let navigate = useNavigate()
 
 	// states for error alert messages
-	const [isError, setIsError] = useState(true)
-	const [errorMessage, setErrorMessage] = useState('')
+	// const [emailError, setEmailError] = useState(false)
+	// const [passwordError, setPasswordError] = useState(false)
+	// const [usernameError, setUsernameError] = useState(false)
 
 	const emailRef = useRef()
 	const passwordRef = useRef()
 	const usernameRef = useRef()
 
 	const handleStart = () => {
-		// if (signupFormSchema.email.isValid) {
+
 
 		setEmail(emailRef.current.value)
-		// } else {
-		// 	setIsError(true)
-
-		// }
+	
 	}
 
 	const handleFinish = async (email, password, username) => {
@@ -53,7 +53,7 @@ const Signup2 = () => {
 			await createUserWithEmailAndPassword(firebaseAuth, email, password)
 			await registerUser({
 				username,
-				email,
+				email, 
 			})
 			// console.log('🔥 Firebase Signup Successful ✅', email, password)
 			// console.log('🔥 MongoDB Signup Successful ✅', email, username)
@@ -138,6 +138,27 @@ const Signup2 = () => {
 										>
 											Get Started
 										</button>
+
+										{/* {emailError &&(
+											<Alert
+									severity="error"
+									action={
+										<IconButton
+											aria-label="close"
+											color="inherit"
+											size="small"
+											onClick={() => {
+												setEmailError(false)
+											}}
+										>
+											<CloseIcon fontSize="inherit" />
+										</IconButton>
+									}
+									sx={{ mb: 2 }}
+								>
+									Invalid email address and / or password!
+								</Alert>
+										)} */}
 									</div>
 								</>
 							) : (

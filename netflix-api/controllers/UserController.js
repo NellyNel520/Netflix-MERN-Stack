@@ -44,30 +44,18 @@ const getUserByUserId = async (req, res) => {
 	}
 }; 
 
-// const getUserByUserId = async (req, res) => {
-// 	try {
-// 		const { id } = req.params;
-// 		const user = await User.findById(id);
-// 		if (user) {
-// 			return res.status(200).json({ user });
-// 		}
-// 		return res
-// 			.status(404)
-// 			.send('User with the specified ID does not exists');
-// 	} catch (error) {
-// 		return res.status(500).send(error.message);
-// 	}
-// }; 
-// GET users movie list by user email
-const getLikedMovies = async (req, res) => {
+// works
+const getSavedList = async (req, res) => {
   try {
-    const { email } = req.params;
-    const user = await User.findOne({ email });
+    const { id } = req.params;
+    const user = await User.findById(id);
     if (user) { 
-      return res.json({ msg: "success", movies: user.likedMovies });
-    } else return res.json({ msg: "User with given email not found." });
+      // return res.json({ msg: "success", movies: user.likedMovies });
+      return res.status(200).json({ savedList: user.likedMovies  });
+    } 
+    else return res.json({ msg: "User with given Id not found." });
   } catch (error) {
-    return res.json({ msg: "Error fetching movies." });
+    return res.status(500).send(error.message);
   }
 };
 // ADD TO USER LIST  
@@ -125,7 +113,7 @@ const removeFromLikedMovies = async (req, res) => {
 
 module.exports = {
 	Register,
-	getLikedMovies, 
+	getSavedList, 
 	addToLikedMovies,
 	removeFromLikedMovies,
   getAllUsers,

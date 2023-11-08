@@ -19,7 +19,9 @@ import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDown
 
 export default React.memo(function ListItem({ index, movie, genres, type, }) {
 	const [isHovered, setIsHovered] = useState(false)
+	// *****need to change 
 	const [isLiked, setIsLiked] = useState(false)
+	// ******
 	const [runtime, setRuntime] = useState('')
 	const [releaseDates, setReleaseDates] = useState([])
 	const [videoId, setVideoId] = useState('')
@@ -92,7 +94,7 @@ export default React.memo(function ListItem({ index, movie, genres, type, }) {
 					// data: {movie, type: 'movie'},
 				})
 				.then(() => setIsLiked(true))
-		} catch (error) {
+		} catch (error) { 
 			console.log(error)
 		}
 	}

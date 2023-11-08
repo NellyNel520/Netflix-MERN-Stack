@@ -3,6 +3,7 @@ import List from '../list/List'
 import ShowList from '../list/ShowList'
 import TrendingList from '../trendingList/TrendingList'
 import TrendingShowList from '../trendingList/TrendingShowList'
+import { useSelector, useDispatch } from 'react-redux'
  
 const HomeLists = ({ movies, shows, }) => {
 	const getMoviesFromRange = (from, to) => {
@@ -11,6 +12,9 @@ const HomeLists = ({ movies, shows, }) => {
 	const getShowsFromRange = (from, to) => {
 		return shows.slice(from, to)
 	}
+	// const savedList = useSelector((state) => state.netflix.savedList)
+	// console.log(savedList)
+
 
 	return (
 		<div>

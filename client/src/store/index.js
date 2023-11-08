@@ -1,14 +1,21 @@
-import { configureStore, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import {
+	configureStore,
+	createAsyncThunk,
+	createSlice,
+	current,
+} from '@reduxjs/toolkit'
 import axios from 'axios'
 import { API_KEY, TMDB_BASE_URL } from '../utils/constants'
+import { firebaseAuth } from '../utils/firebase'
 
 const initialState = {
-	movies: [], 
+	movies: [],
 	shows: [],
 	genresLoaded: false,
-	genres: [], 
-	usersList: [],
+	genres: [],
 	users: [],
+	activeUser: null,
+	savedList: [],
 }
 
 export const getGenres = createAsyncThunk('netflix/genres', async () => {
@@ -17,18 +24,6 @@ export const getGenres = createAsyncThunk('netflix/genres', async () => {
 	} = await axios.get(`${TMDB_BASE_URL}/genre/movie/list?api_key=${API_KEY}`)
 	return genres
 })
-
-// get all users
-export const getAllUsers = createAsyncThunk('netflix/users', async () => {
-	const {
-		data: { users },
-	} = await axios.get('http://localhost:3001/api/user/all-users')
-	return users
-})
-
-
-
-
 
 const createArrayFromRawData = (array, moviesArray, genres) => {
 	array.forEach((movie) => {
@@ -51,8 +46,6 @@ const createArrayFromRawData = (array, moviesArray, genres) => {
 	})
 }
 
-
-
 const getRawData = async (api, genres, paging = false) => {
 	const moviesArray = []
 	for (let i = 1; moviesArray.length < 100 && i < 10; i++) {
@@ -63,10 +56,6 @@ const getRawData = async (api, genres, paging = false) => {
 	}
 	return moviesArray
 }
-
-
-
-
 
 export const fetchDataByGenre = createAsyncThunk(
 	'netflix/genre',
@@ -109,7 +98,7 @@ export const fetchMovies = createAsyncThunk(
 )
 
 export const fetchShows = createAsyncThunk(
-	'netflix/trendingShows', 
+	'netflix/trendingShows',
 	async ({ type }, thunkAPI) => {
 		const {
 			netflix: { genres },
@@ -121,37 +110,79 @@ export const fetchShows = createAsyncThunk(
 		)
 	}
 )
+// get all users **works**
+export const getAllUsers = createAsyncThunk('netflix/users', async () => {
 
-// register user to monogo DB && add item to "my list" calls made in frontend UI
+	const { 
+		data: { users },
+	} = await axios.get('http://localhost:3001/api/user/all-users')
+	return users
+})
+
+
+// ***************Get active user by email ***********************
+
+export const getSavedList = createAsyncThunk('netflix/saved-list', async ({users, email}) => {
+	let user = users.find((o) => o.email === email)
+	let id = user._id
+	const {
+		data: { savedList },
+	} = await axios.get(`http://localhost:3001/api/user/savedList/${id}`)
+	return savedList
+})
+
+
+
+
+
+
+
+
+// *****STEP 2:
+// get current user email using firebase auth,
+// filter through users to find user with matching email,
+// sets the id for the current user
+// then make api call to mongodb to get active user
+const findUserByEmail = async (users) => {
+	const email = firebaseAuth().currentUser.email
+	let user = users.find((o) => o.email === email)
+	let id = user._id
+	// function send id as param 
+	// getUser(id)
+
+	// const {
+	// 	data: { activeUser },
+	// } = await axios.get(`${api}/${id}`)
+	// return activeUser
+}
+
+
+
 
 
 
 export const getUsersLikedMovies = createAsyncThunk(
-  "netflix/getLiked",
-  async (email) => {
-    const {
-      data: { movies },
-    } = await axios.get(`http://localhost:3001/api/user/liked/${email}`);
-    return movies;
-  }
-);
+	'netflix/getLiked',
+	async (email) => {
+		const {
+			data: { movies },
+		} = await axios.get(`http://localhost:3001/api/user/liked/${email}`)
+		return movies
+	}
+)
 
 export const removeMovieFromLiked = createAsyncThunk(
-  "netflix/deleteLiked",
-  async ({ movieId, email }) => {
-    const {
-      data: { movies },
-    } = await axios.put('http://localhost:3001/api/user/remove', {
-      email,
-      movieId,
-    });
-    return movies;
-  }
-);
-
-
-
-
+	'netflix/deleteLiked',
+	async ({ movieId, email }) => {
+		const {
+			data: { movies },
+		} = await axios.put('http://localhost:3001/api/user/remove', {
+			email,
+			movieId,
+		})
+		return movies
+	}
+)
 
 const NetflixSlice = createSlice({
 	name: 'Netflix',
@@ -164,9 +195,6 @@ const NetflixSlice = createSlice({
 		builder.addCase(fetchMovies.fulfilled, (state, action) => {
 			state.movies = action.payload
 		})
-		builder.addCase(getAllUsers.fulfilled, (state, action) => {
-			state.users = action.payload
-		})
 		builder.addCase(fetchShows.fulfilled, (state, action) => {
 			state.shows = action.payload
 		})
@@ -176,12 +204,20 @@ const NetflixSlice = createSlice({
 		builder.addCase(fetchShowDataByGenre.fulfilled, (state, action) => {
 			state.shows = action.payload
 		})
-		builder.addCase(getUsersLikedMovies.fulfilled, (state, action) => {
-		  state.movies = action.payload
-		});
+		builder.addCase(getAllUsers.fulfilled, (state, action) => {
+			state.users = action.payload
+			state.usersLoaded = true
+		})
+		builder.addCase(getSavedList.fulfilled, (state, action) => {
+			state.savedList = action.payload
+		})
 		builder.addCase(removeMovieFromLiked.fulfilled, (state, action) => {
-		  state.movies = action.payload;
-		});
+			state.savedList = action.payload
+		})
+		// doesnt work
+		builder.addCase(getUsersLikedMovies.fulfilled, (state, action) => {
+			state.movies = action.payload
+		})
 	},
 })
 
