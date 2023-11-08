@@ -21,11 +21,9 @@ const Home = ({type}) => {
 	const email = currentUser.email
 
 	const users = useSelector((state) => state.netflix.users)
-	const savedList = useSelector((state) => state.netflix.savedList)
+	// const savedList = useSelector((state) => state.netflix.savedList)
 	// const activeUser = useSelector((state) => state.netflix.activeUser)
-	const usersLoaded = useSelector((state) => state.netflix.usersLoaded)
-
-
+	
 	const navigate = useNavigate()
 	const dispatch = useDispatch()   
 

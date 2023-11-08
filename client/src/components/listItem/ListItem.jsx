@@ -1,9 +1,9 @@
 import './listItem.scss'
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import movieTrailer from 'movie-trailer' 
+import movieTrailer from 'movie-trailer'
 import YouTube from 'react-youtube'
-import axios from 'axios' 
+import axios from 'axios'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
@@ -16,11 +16,9 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
 
-
-export default React.memo(function ListItem({ index, movie, genres, type, }) {
+export default React.memo(function ListItem({ index, movie, genres, type }) {
 	const [isHovered, setIsHovered] = useState(false)
-	// *****need to change 
-	const [isLiked, setIsLiked] = useState(false)
+	// *****need to change
 	// ******
 	const [runtime, setRuntime] = useState('')
 	const [releaseDates, setReleaseDates] = useState([])
@@ -29,16 +27,16 @@ export default React.memo(function ListItem({ index, movie, genres, type, }) {
 	const navigate = useNavigate()
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
-	
 
-	// console.log(usersList)
-	const dispatch = useDispatch() 
+	const dispatch = useDispatch()
+	const savedList = useSelector((state) => state.netflix.savedList)
 
-	// console.log(usersSavedList)
+	const [isLiked, setIsLiked] = useState(false)
+	const [isSaved, setIsSaved] = useState(false)
+	// console.log(savedList)
 
 	useEffect(() => {
 		const getRunTime = () => {
-			
 			axios
 				.get(
 					// `${TMDB_BASE_URL}/${type}/${movie.id}?api_key=${API_KEY}&language=en-US&append_to_response=release_dates`
@@ -55,7 +53,6 @@ export default React.memo(function ListItem({ index, movie, genres, type, }) {
 		}
 
 		const getMovieTrailer = async () => {
-			
 			await movieTrailer(movie.name, {
 				id: true,
 				multi: true,
@@ -66,12 +63,24 @@ export default React.memo(function ListItem({ index, movie, genres, type, }) {
 				)
 				.catch((err) => console.log(err))
 		}
-
+		const isItemSaved = () => {
+			try {
+				let saved = savedList.find((o) => o.id === movie.id)
+				if (saved) {
+					// setIsLiked(true)
+					setIsSaved(true)
+				}
+			} catch (error) {
+				console.log(error)
+			}
+		}
 
 		getRunTime()
 		getMovieTrailer()
+		isItemSaved()
+	}, [movie, type, savedList])
 
-	}, [movie, type,])
+	console.log(isSaved)
 
 	// console.log(genreNames)
 
@@ -86,25 +95,24 @@ export default React.memo(function ListItem({ index, movie, genres, type, }) {
 
 	const addToList = async () => {
 		try {
-			
 			await axios
 				.post('http://localhost:3001/api/user/add', {
 					email,
 					data: movie,
 					// data: {movie, type: 'movie'},
 				})
-				.then(() => setIsLiked(true))
-		} catch (error) { 
+				.then(() => setIsSaved(true))
+		} catch (error) {
 			console.log(error)
 		}
 	}
-	
 
 	const removeFromList = async () => {
 		try {
-			await dispatch(removeMovieFromLiked({movieId: movie.id, email}))
-			.then(() => setIsLiked(false))
-		} catch (error){
+			await dispatch(removeMovieFromLiked({ movieId: movie.id, email })).then(
+				() => setIsSaved(false)
+			)
+		} catch (error) {
 			console.log(error)
 		}
 	}
@@ -117,14 +125,8 @@ export default React.memo(function ListItem({ index, movie, genres, type, }) {
 			onMouseLeave={() => setIsHovered(false)}
 		>
 			{!isHovered ? (
-				<img
-					
-					src={`${BASE_URL}/${movie.image}`}
-					alt="movie cover"
-					
-				/>
+				<img src={`${BASE_URL}/${movie.image}`} alt="movie cover" />
 			) : null}
-		
 
 			{isHovered && (
 				<div>
@@ -138,18 +140,21 @@ export default React.memo(function ListItem({ index, movie, genres, type, }) {
 								width: '325px',
 								playerVars: { autoplay: 1, mute: 1 },
 							}}
-							
 						/>
 					) : (
-						<img src={`${BASE_URL}/${movie.image}`} alt="movie cover"  onClick={() =>
-										navigate('/watch', {
-											state: { videoId: videoId, movie: movie },
-										})
-									}/>
+						<img
+							src={`${BASE_URL}/${movie.image}`}
+							alt="movie cover"
+							onClick={() =>
+								navigate('/watch', {
+									state: { videoId: videoId, movie: movie },
+								})
+							}
+						/>
 					)}
 					<div className="itemInfo">
 						<p>{movie.name}</p>
-						
+
 						<div className="icons">
 							<div>
 								<PlayArrowIcon
@@ -162,9 +167,13 @@ export default React.memo(function ListItem({ index, movie, genres, type, }) {
 								/>
 
 								{/* ******************* on click add to my list mongo db *****************/}
-
-								{isLiked ? (
-									<CheckIcon className="icon" title="Already saved" onClick={removeFromList}/>
+								{/* check saved list for movie  */}
+								{isSaved ? (
+									<CheckIcon
+										className="icon"
+										title="Already saved"
+										onClick={removeFromList}
+									/>
 								) : (
 									<AddIcon
 										className="icon"
@@ -172,7 +181,6 @@ export default React.memo(function ListItem({ index, movie, genres, type, }) {
 										onClick={addToList}
 									/>
 								)}
-								
 
 								<ThumbUpAltOutlinedIcon className="icon" />
 							</div>
@@ -185,21 +193,18 @@ export default React.memo(function ListItem({ index, movie, genres, type, }) {
 							) : (
 								<span className="limit">NR</span>
 							)}
-						
+
 							<span className="time">
 								{runtime > 60 ? `${hours}h ${mins}m` : `${runtime}m`}
 							</span>
-							
+
 							<span className="limit">4K</span>
 						</div>
-
-					
 
 						<div className="genre">
 							{movie.genres.map((name) => (
 								<span className="test">{name}</span>
 							))}
-					
 						</div>
 					</div>
 				</div>

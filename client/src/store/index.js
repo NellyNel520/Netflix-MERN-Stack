@@ -66,7 +66,7 @@ export const fetchDataByGenre = createAsyncThunk(
 		return getRawData(
 			`${TMDB_BASE_URL}/discover/${type}?api_key=${API_KEY}&with_genres=${genre}`,
 			genres
-		)
+		) 
 	}
 )
 
@@ -125,14 +125,14 @@ export const getAllUsers = createAsyncThunk('netflix/users', async () => {
 export const getSavedList = createAsyncThunk('netflix/saved-list', async ({users, email}) => {
 	let user = users.find((o) => o.email === email)
 	let id = user._id
-	const {
+	const { 
 		data: { savedList },
 	} = await axios.get(`http://localhost:3001/api/user/savedList/${id}`)
 	return savedList
 })
 
 
-
+// 
 
 
 
