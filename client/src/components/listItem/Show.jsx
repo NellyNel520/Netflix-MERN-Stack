@@ -107,7 +107,7 @@ export default React.memo(function Show({ index, movie, genres, type }) {
 					email,
 					data: movie,
 				})
-				.then(() => setIsLiked(true))
+				.then(() => setIsSaved(true))
 		} catch (error) {
 			console.log(error)
 		}
@@ -116,7 +116,7 @@ export default React.memo(function Show({ index, movie, genres, type }) {
 	const removeFromList = async () => {
 		try {
 			await dispatch(removeMovieFromLiked({movieId: movie.id, email}))
-			.then(() => setIsLiked(false))
+			.then(() => setIsSaved(false))
 		} catch (error){
 			console.log(error)
 		}

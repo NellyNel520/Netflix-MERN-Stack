@@ -91,7 +91,7 @@ export default React.memo(function TrendingItem({ index, item }) {
 					email,
 					data: item,
 				})
-				.then(() => setIsLiked(true))
+				.then(() => setIsSaved(true))
 		} catch (error) {
 			console.log(error)
 		}
@@ -100,7 +100,7 @@ export default React.memo(function TrendingItem({ index, item }) {
 	const removeFromList = async () => {
 		try {
 			await dispatch(removeMovieFromLiked({ movieId: item.id, email })).then(
-				() => setIsLiked(false)
+				() => setIsSaved(false)
 			)
 		} catch (error) {
 			console.log(error)

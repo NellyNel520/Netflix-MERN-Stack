@@ -100,7 +100,7 @@ export default React.memo(function ListItem({ index, movie, genres, type }) {
 					// data: {movie, type: 'movie'},
 				})
 				.then(() => setIsSaved(true))
-		} catch (error) { 
+		} catch (error) {  
 			console.log(error)
 		}
 	}

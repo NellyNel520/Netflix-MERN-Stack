@@ -18,7 +18,6 @@ import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDown
 
 const Card = ({index, movie, genres, type,}) => {
   const [isHovered, setIsHovered] = useState(false)
-	const [isLiked, setIsLiked] = useState(false)
 	const [runtime, setRuntime] = useState('')
 	const [releaseDates, setReleaseDates] = useState([])
 	const [videoId, setVideoId] = useState('')
@@ -27,6 +26,11 @@ const Card = ({index, movie, genres, type,}) => {
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
   const dispatch = useDispatch() 
+
+	const [isLiked, setIsLiked] = useState(false)
+  const savedList = useSelector((state) => state.netflix.savedList)
+	const [isSaved, setIsSaved] = useState(false)
+
 
   useEffect(() => {
 		const getRunTime = () => {
@@ -59,11 +63,23 @@ const Card = ({index, movie, genres, type,}) => {
 				.catch((err) => console.log(err))
 		}
 
+    const isItemSaved = () => {
+			try {
+				let saved = savedList.find((o) => o.id === movie.id)
+				if (saved) {
+					// setIsLiked(true)
+					setIsSaved(true)
+				}
+			} catch (error) {
+				console.log(error)
+			}
+		}
+
 
 		getRunTime()
 		getMovieTrailer()
-
-	}, [movie, type,])
+    isItemSaved()
+	}, [movie, type, savedList])
 
 	
 	const hours = Math.floor(runtime / 60)
@@ -82,7 +98,7 @@ const Card = ({index, movie, genres, type,}) => {
 					email,
 					data: movie,
 				})
-				.then(() => setIsLiked(true))
+				.then(() => setIsSaved(true))
 		} catch (error) {
 			console.log(error)
 		}
@@ -92,7 +108,7 @@ const Card = ({index, movie, genres, type,}) => {
 	const removeFromList = async () => {
 		try {
 			await dispatch(removeMovieFromLiked({movieId: movie.id, email}))
-			.then(() => setIsLiked(false))
+			.then(() => setIsSaved(false))
 		} catch (error){
 			console.log(error)
 		}
@@ -147,7 +163,7 @@ const Card = ({index, movie, genres, type,}) => {
 
               {/* ******************* on click add to my list mongo db *****************/}
 
-              {isLiked ? (
+              {isSaved ? (
                 <CheckIcon className="icon" title="Already saved" onClick={removeFromList}/>
               ) : (
                 <AddIcon
