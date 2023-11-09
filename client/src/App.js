@@ -36,7 +36,7 @@ const App = () => {
 				/>
 
 
-				{currentUser && (
+	
 					<>
 						<Route exact path="/watch" element={currentUser ? <Watch /> : <Navigate to={'/'} />} />
 						<Route exact  path="/movies" element={currentUser ? <Movies /> : <Navigate to={'/'} />} />
@@ -45,7 +45,7 @@ const App = () => {
 						<Route exact path="/myList" element={currentUser ? <UserWatchList /> : <Navigate to={'/'} />}/>
 						<Route exact path="/search" element={currentUser ? <Search /> : <Navigate to={'/'} />}/>
 					</>
-				)}
+			
 			</Routes>
 		</BrowserRouter>
 	)
