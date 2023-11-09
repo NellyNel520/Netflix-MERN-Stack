@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
-import { getSavedList } from '../../store'
+import { getSavedList, getAllUsers } from '../../store'
 import Navbar from '../../components/navbar/Navbar'
-import Card from '../../components/card/Card'
+import Card from '../../components/card/Card' 
 
 const UserWatchList = () => {
 	const { currentUser } = useContext(AuthContext)
@@ -17,9 +17,12 @@ const UserWatchList = () => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 
-	useEffect(() => {
+	useEffect(() => { 
+		dispatch(getAllUsers())
 		dispatch(getSavedList({ users, email }))
-	}, [users, email, dispatch])
+	}, [])
+
+	console.log(savedList)
 
 	return (
 		<div className="container">

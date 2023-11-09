@@ -14,6 +14,7 @@ import AddIcon from '@mui/icons-material/Add'
 import CheckIcon from '@mui/icons-material/Check'
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
+import { MONGO_DB_BASE_URL } from '../../utils/constants'
 
 export default React.memo(function ListItem({ index, movie, type }) {
 	const [isHovered, setIsHovered] = useState(false)
@@ -50,7 +51,7 @@ export default React.memo(function ListItem({ index, movie, type }) {
 			await movieTrailer(movie.name, {
 				id: true,
 				multi: true,
-			})
+			}) 
 				.then((response) =>
 					// console.log(response, 'herrrreeeee')
 					setVideoId(response[1])
@@ -90,7 +91,7 @@ export default React.memo(function ListItem({ index, movie, type }) {
 	const addToList = async () => {
 		try {
 			await axios
-				.post('http://localhost:3001/api/user/add', {
+				.post(`${MONGO_DB_BASE_URL}/user/add`, {
 					email,
 					data: movie,
 				})

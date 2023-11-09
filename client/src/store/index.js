@@ -5,7 +5,8 @@ import {
 	current,
 } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { API_KEY, TMDB_BASE_URL } from '../utils/constants'
+import { API_KEY, TMDB_BASE_URL, MONGO_DB_BASE_URL } from '../utils/constants'
+
 
 const initialState = {
 	movies: [],
@@ -27,7 +28,7 @@ export const getGenres = createAsyncThunk('netflix/genres', async () => {
 const createArrayFromRawData = (array, moviesArray, genres) => {
 	array.forEach((movie) => {
 		const movieGenres = []
-		movie.genre_ids.forEach((genre) => {
+		movie.genre_ids.forEach((genre) => { 
 			const name = genres.find(({ id }) => id === genre)
 			if (name) movieGenres.push(name.name)
 		})
@@ -113,7 +114,7 @@ export const fetchShows = createAsyncThunk(
 export const getAllUsers = createAsyncThunk('netflix/users', async () => {
 	const {
 		data: { users },
-	} = await axios.get('http://localhost:3001/api/user/all-users')
+	} = await axios.get(`${MONGO_DB_BASE_URL}/user/all-users`)
 	return users
 })
 
@@ -124,7 +125,7 @@ export const getSavedList = createAsyncThunk(
 		let id = user._id
 		const {
 			data: { savedList },
-		} = await axios.get(`http://localhost:3001/api/user/savedList/${id}`)
+		} = await axios.get(`${MONGO_DB_BASE_URL}/user/savedList/${id}`)
 		return savedList
 	}
 )
@@ -134,7 +135,7 @@ export const removeMovieFromLiked = createAsyncThunk(
 	async ({ movieId, email }) => {
 		const {
 			data: { savedList },
-		} = await axios.put('http://localhost:3001/api/user/remove', {
+		} = await axios.put(`${MONGO_DB_BASE_URL}/user/remove`, {
 			email,
 			movieId,
 		})
@@ -170,7 +171,11 @@ const NetflixSlice = createSlice({
 			state.savedList = action.payload
 		})
 		builder.addCase(removeMovieFromLiked.fulfilled, (state, action) => {
-			state.savedList = action.payload
+			// state.savedList = action.payload
+			state.savedList.splice(
+        state.savedList.findIndex((item) => item.id === action.payload),
+        1
+      );
 		})
 	},
 })

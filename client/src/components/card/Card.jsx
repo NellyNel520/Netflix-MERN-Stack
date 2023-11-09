@@ -14,6 +14,7 @@ import AddIcon from '@mui/icons-material/Add'
 import CheckIcon from '@mui/icons-material/Check'
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
+import { MONGO_DB_BASE_URL } from '../../utils/constants'
 
 const Card = ({ index, movie, genres, type }) => {
 	const [isHovered, setIsHovered] = useState(false)
@@ -27,6 +28,7 @@ const Card = ({ index, movie, genres, type }) => {
 	const dispatch = useDispatch()
 	const savedList = useSelector((state) => state.netflix.savedList)
 	const [isSaved, setIsSaved] = useState(false)
+	
 
 	useEffect(() => {
 		const getRunTime = () => {
@@ -81,7 +83,7 @@ const Card = ({ index, movie, genres, type }) => {
 	const addToList = async () => {
 		try {
 			await axios
-				.post('http://localhost:3001/api/user/add', {
+				.post(`${MONGO_DB_BASE_URL}/user/add`, {
 					email,
 					data: movie,
 				})

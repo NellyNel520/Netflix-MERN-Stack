@@ -8,6 +8,7 @@ import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
 import { removeMovieFromLiked } from '../../store'
+import { MONGO_DB_BASE_URL } from '../../utils/constants'
 // Icons
 import PlayArrowIcon from '@mui/icons-material/PlayArrow' 
 import AddIcon from '@mui/icons-material/Add'
@@ -102,7 +103,7 @@ export default React.memo(function Show({ index, movie, genres, type }) {
 	const addToList = async () => {
 		try {
 			await axios
-				.post('http://localhost:3001/api/user/add', {
+				.post(`${MONGO_DB_BASE_URL}/user/add`, {
 					email,
 					data: movie,
 				})

@@ -2,7 +2,7 @@
 #### Date: 11/08/2023
 ##### By: Channel Harris 
 
-##### [Portfolio Site](https://www.channelharris.com/) | [Github](https://github.com/NellyNel520) | [LinkedIn](https://www.linkedin.com/in/channelharris/) | [Vettery]()
+##### [Portfolio Site](https://www.channelharris.com/) | [Github](https://github.com/NellyNel520) | [LinkedIn](https://www.linkedin.com/in/channelharris/) | 
 
 ***
 

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { firebaseAuth } from '../../utils/firebase'
 import { useNavigate } from 'react-router-dom'
+import { MONGO_DB_BASE_URL } from '../../utils/constants'
 import SearchIcon from '@mui/icons-material/Search'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
@@ -42,7 +43,7 @@ const Navbar = () => {
 				let user = users.find((o) => o.email === email)
 				let id = user._id
 				await axios
-					.get(`http://localhost:3001/api/user/${id}`)
+					.get(`${MONGO_DB_BASE_URL}/user/${id}`)
 					.then((response) => {
 						// console.log(response.data.user.username)
 						setUsername(response.data.user.username)
