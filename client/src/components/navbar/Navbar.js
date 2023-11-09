@@ -6,7 +6,6 @@ import { AuthContext } from '../../context/AuthContext'
 import { Link } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { firebaseAuth } from '../../utils/firebase'
-import { useNavigate } from 'react-router-dom'
 import { MONGO_DB_BASE_URL } from '../../utils/constants'
 import SearchIcon from '@mui/icons-material/Search'
 import NotificationsIcon from '@mui/icons-material/Notifications'
@@ -29,7 +28,6 @@ const Navbar = () => {
 	}
 
 	const dispatch = useDispatch()
-	const navigate = useNavigate()
 
 	useEffect(() => {
 		dispatch(getAllUsers())

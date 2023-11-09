@@ -1,6 +1,6 @@
 import './userWatchList.scss'
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
@@ -14,7 +14,7 @@ const UserWatchList = () => {
 	const users = useSelector((state) => state.netflix.users)
 	const savedList = useSelector((state) => state.netflix.savedList)
 
-	const navigate = useNavigate()
+	// const navigate = useNavigate()
 	const dispatch = useDispatch()
 
 	useEffect(() => { 

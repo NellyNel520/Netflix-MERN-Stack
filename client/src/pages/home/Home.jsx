@@ -3,8 +3,7 @@ import React, { useEffect } from 'react'
 import Navbar from '../../components/navbar/Navbar'
 import Featured from '../../components/featured/Featured'
 import HomeLists from '../../components/listContainer/HomeLists'
-
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
 	fetchMovies,
@@ -26,7 +25,6 @@ const Home = ({ type }) => {
 
 	const users = useSelector((state) => state.netflix.users)
 
-	const navigate = useNavigate()
 	const dispatch = useDispatch()
 
 	useEffect(() => {

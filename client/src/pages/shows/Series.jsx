@@ -1,7 +1,6 @@
 import './series.scss'
 import Navbar from '../../components/navbar/Navbar'
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getGenres, fetchShows } from '../../store'
 import ShowScreenLists from '../../components/listContainer/ShowScreenLists'
@@ -12,7 +11,7 @@ const Series = () => {
 	const genres = useSelector((state) => state.netflix.genres)
 	const genresLoaded = useSelector((state) => state.netflix.genresLoaded)
 
-	const navigate = useNavigate()
+	
 	const dispatch = useDispatch()
 
 	useEffect(() => {

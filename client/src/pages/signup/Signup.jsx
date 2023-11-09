@@ -1,6 +1,6 @@
 import './signup.scss'
 import React, { useState, useRef } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { firebaseAuth } from '../../utils/firebase'
 import { registerUser } from '../../context/apiCalls'
@@ -18,7 +18,7 @@ const signupFormSchema = Yup.object().shape({
 
 const Signup2 = () => {
 	const [email, setEmail] = useState('')
-	let navigate = useNavigate()
+
 
 	const emailRef = useRef()
 	const passwordRef = useRef()

@@ -2,7 +2,6 @@ import './newAndPopular.scss'
 import React, { useEffect } from 'react'
 import Navbar from '../../components/navbar/Navbar'
 import NewAndPopLists from '../../components/listContainer/NewAndPopLists'
-import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchMovies, getGenres, fetchShows } from '../../store'
 
@@ -12,7 +11,7 @@ const NewAndPopular = () => {
 	const genres = useSelector((state) => state.netflix.genres)
 	const genresLoaded = useSelector((state) => state.netflix.genresLoaded)
 
-	const navigate = useNavigate()
+
 	const dispatch = useDispatch()
 
 	useEffect(() => {

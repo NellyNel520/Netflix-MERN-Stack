@@ -3,7 +3,6 @@ import Navbar from '../../components/navbar/Navbar'
 import React, { useEffect } from 'react'
 import Featured from '../../components/featured/Featured'
 import MoviesScreenLists from '../../components/listContainer/MoviesScreenLists'
-import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchMovies, getGenres, getAllUsers, getSavedList} from '../../store'
 import { useContext } from 'react'
@@ -18,7 +17,6 @@ const movies = useSelector((state) => state.netflix.movies);
 	const email = currentUser.email
   const users = useSelector((state) => state.netflix.users)
 
-  const navigate = useNavigate()
 	const dispatch = useDispatch()
   
 	useEffect(() => {
