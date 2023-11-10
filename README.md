@@ -8,9 +8,9 @@
 
 #### ***Description***
 
-This Netflix Clone application replicates the iconic Netflix experience and offers a feature-rich platform for users to explore, engage with, and personalize their favorite movies and TV shows. Powered by the MERN stack (MongoDB, Express, React, Node.js) and incorporating firebase authentication, TMDB api and redux-toolkit, this clone recreates the functionality and design of the original app. Providing a familiar, and seamless and immersive user experience.
+This Netflix Clone application replicates the iconic Netflix experience and offers a feature-rich platform for users to explore, engage with, and personalize their favorite movies and TV shows. Powered by the MERN stack (MongoDB, Express, React, Node.js) and incorporating firebase authentication, TMDB API and redux-toolkit, this clone recreates the functionality and design of the original app. Providing a familiar, and seamless and immersive user experience.
 
-This project has been deployed and can be viewed [here]()
+This project has been deployed and can be viewed [here](https://netflix-clone-ui-jl8h.onrender.com/)
 ***
 
 #### ***Technologies Used*** 
@@ -24,15 +24,19 @@ This project has been deployed and can be viewed [here]()
 * Formik
 * Yup
 * Email Validator
+* Movie-trailer
+* React-youtube
 
 ***
 
 ### ***Key Features 🛠️***
 1. **User Authentication:** Register and sign in securely using Firebase Authentication.
-2. **Content Discovery:** Dive into an extensive collection of movies and TV shows with detailed information, including ratings, descriptions, and more.
+2. **Content Discovery:** Dive into an extensive collection of movies and TV shows with detailed information, including trailers, ratings, descriptions, and more.
 3. **Filter by Category:** Easily filter and sort content by categories, allowing users to discover their favorite genres and themes.
 4. **Personalized "Saved List":** Registered users can create and manage their personalized "saved list" of favorite movies and TV shows.
 5. **Netflix-like Design:** This application not only boasts similar functionality but also replicates the iconic design of the original Netflix app, ensuring a familiar and intuitive experience.
+6. **Trailer Fetching:** Utilizes the movie-trailer package to fetch YouTube trailers for any movie or TV show using either the name or TMDB API ID.
+7. **React YouTube Integration:** Leverages react-youtube for a seamless integration of YouTube videos into the application.
 
 
 #### ***Getting Started***
@@ -50,7 +54,7 @@ Here's how you can get started with my Netflix Clone App:
 Now, you can explore, sign up, and sign in to begin enjoying the Netflix-like experience right from your browser.
 
 
-The project itself was deployed and can be viewed [here]().
+The project itself was deployed and can be viewed [here](https://netflix-clone-ui-jl8h.onrender.com/).
 
 ***
 
