@@ -1,8 +1,10 @@
-# Netflix Clone 
-#### Date: 11/08/2023
-##### By: Channel Harris 
+# Netflix Clone
 
-##### [Portfolio Site](https://www.channelharris.com/) | [Github](https://github.com/NellyNel520) | [LinkedIn](https://www.linkedin.com/in/channelharris/) | 
+## By: Channel Harris
+
+### Date: 11/08/2023
+
+#### [Portfolio Site](https://www.channelharris.com/) | [Github](https://github.com/NellyNel520) | [LinkedIn](https://www.linkedin.com/in/channelharris/) | 
 
 ***
 
@@ -14,6 +16,7 @@ This project has been deployed and can be viewed [here](https://netflix-clone-ui
 ***
 
 #### ***Technologies Used*** 
+
 * React
 * Express 
 * Node.JS
@@ -30,6 +33,7 @@ This project has been deployed and can be viewed [here](https://netflix-clone-ui
 ***
 
 ### ***Key Features 🛠️***
+
 1. **User Authentication:** Register and sign in securely using Firebase Authentication.
 2. **Content Discovery:** Dive into an extensive collection of movies and TV shows with detailed information, including trailers, ratings, descriptions, and more.
 3. **Filter by Category:** Easily filter and sort content by categories, allowing users to discover their favorite genres and themes.
@@ -40,6 +44,7 @@ This project has been deployed and can be viewed [here](https://netflix-clone-ui
 
 
 #### ***Getting Started***
+
 Here's how you can get started with my Netflix Clone App:
 
 1. fork and clone this repository
@@ -59,11 +64,29 @@ The project itself was deployed and can be viewed [here](https://netflix-clone-u
 ***
 
 *** 
+
 ### ***Future Updates***
+
 - [] Search Screen
-- [] search bar functionality 
+- [] search bar functionality
 - [] Like  & dislike movies
 
 
-
 ***
+
+## Credits
+
+This project was developed by Channel Harris as a demonstration of MERN stack Netflix Clone. The project utilizes various open-source libraries, frameworks, and resources, including:
+
+* React.js: https://reactjs.org/
+* Redux Toolkit: https://redux-toolkit.js.org/
+* Firebase Authentication: https://firebase.google.com/
+* Express.js: https://expressjs.com/
+* Node.js: https://nodejs.org/
+* MongoDB: https://www.mongodb.com/
+* Formik: https://formik.org/
+* Yup: https://www.npmjs.com/package/yup
+* React Youtube: https://www.npmjs.com/package/react-youtube
+* Movie-Trailer: https://www.npmjs.com/package/movie-trailer
+* TMDB API: https://developer.themoviedb.org/docs
+
